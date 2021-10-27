@@ -29,49 +29,43 @@
         <link href="https://fonts.googleapis.com/css2?family=Noto+Sans&display=swap" rel="stylesheet">
     </head>
     <body>
-        <nav>
-            <img src="{% static 'img/navbar/avocado_192x192.png' %}" alt="avocado" class="navbar-img" />
-            
-            <div>
-                <ul>
-                    {% if user.is_authenticated %}
-                        <li>
-                            <a href="#">{{ user.username }}</a>
-                        </li>
-                    {% endif %}
-                    
-                    <li>
-                        <a href="#">All Recipes</a>
+        <nav class="navbar">
+            <img src="{% static 'img/navbar/avocado_192x192.png' %}" alt="avocado" class="navbar-img nav-item" />
+            <ul class="nav-list">
+                {% if user.is_authenticated %}  
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">POLDO{{ user.username }}</a>
                     </li>
-                    {% if user.is_authenticated %}
-                        <li>
-                            <a href="#">Favorite Recipes</a>
-                        </li>
-                        <li>
-                            <a href="#">Shopping List</a>
-                        </li>
-                    {% endif %}
-                </ul>
-                <ul>
-                    {% if user.is_authenticated %}
-                        <li>
-                            <a href="#">Logout</a>
-                        </li>
-                    {% else %}
-                        <li>
-                            <a href="#">Login</a>
-                        </li>
-                        <li>
-                            <a href="#">Register</a>
-                        </li>
-                    {% endif %}
-                </ul>
-                <form>
-                    <input type="search" placeholder="Search recipes...">
-                    <button type="submit">Search</button>
-                </form>
-            </div>
-            <button class="hamburger">
+                {% endif %}
+                <li class="nav-item">
+                    <a class="nav-link" href="#">All Recipes</a>
+                </li>
+                {% if user.is_authenticated %}
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Favorite Recipes</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Shopping List</a>
+                    </li>
+                {% endif %}
+                {% if user.is_authenticated %}
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Logout</a>
+                    </li>
+                {% else %}
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Login</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Register</a>
+                    </li>
+                {% endif %}
+            </ul>
+            <form class="nav-item">
+                <input class="search-field" type="search" placeholder="Search recipes...">
+                <button type="submit">Search</button>
+            </form>
+            <button class="hamburger nav-item">
                 <span class="hamburger-open"><i class="fas fa-bars"></i></span>
                 <span class="hamburger-close"><i class="fas fa-times"></i></span>
                 <span class="hamburger-name">Menu</span>  

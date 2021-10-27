@@ -1,0 +1,58 @@
+/* 
+
+INDEX
+
+1. Reset
+2. Color Palette
+3. Fonts
+4. Background
+5. NavBar
+6. Search
+
+*/
+
+/* 1. Reset */
+* {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+}
+
+/* 2. Color Palette */
+:root {
+    --black: #000000;
+    --white: #ffffff;
+    --light-grey: #D0D9CD;
+    --grey: #B2BEB5;
+    --green: #3E721D;
+    --light-green: #A6D388;
+    --light-green-1: #C6E5B3;
+    --brown: #662113;
+    --light-brown: #7C3225;
+
+}
+
+/* 3. Fonts */
+:root {
+    --font-family: 'Noto Sans';
+    --font-large: 1.5rem;
+    --font-normal: 1.1rem;
+    --font-small: 1rem;
+}
+
+/* 4. Background */
+body {
+    color: var(--black);
+    background-color: var(--white);
+    font-family: var(--font-family), sans-serif;
+}
+
+/* 5. NavBar */
+.navbar-img {
+    max-width: 2.5rem ;
+}
+
+/* 6. Search */
+
+
+

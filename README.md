@@ -2,5 +2,5 @@
 
 ## Distinctiveness and Complexity
 
-### Video
+## Video
 

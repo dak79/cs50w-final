@@ -1,6 +1,6 @@
 # CS50W - Final Project - Recipes
 
-### Distinctiveness and Complexity
+## Distinctiveness and Complexity
 
 ### Video
 

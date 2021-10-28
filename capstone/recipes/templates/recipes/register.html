@@ -1,0 +1,18 @@
+{% extends "recipes/layout.html"%}
+
+{% block title %}
+    Register
+{% endblock %}
+
+{% block body %}
+    <form>
+        <h1>Sign Up</h1>
+        <fieldset>
+            <legend>Your Information</legend>
+            {% csrf_token %}
+            {{ register_form }}
+        </fieldset>
+        <button class="btn-form" type="submit">Sign Up</button>
+    </form>
+
+{% endblock %}

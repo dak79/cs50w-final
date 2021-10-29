@@ -16,8 +16,22 @@ class RegisterForm(forms.Form):
                                    
                                    "class": "form-item"
                                 }))
-    confirm_password = forms.CharField(label="Confirm Password", max_length=100, min_length=6,
+    confirmation = forms.CharField(label="Confirm Password", max_length=100, min_length=6,
                                        widget=forms.PasswordInput(attrs={
                                            
                                            "class": "form-item"
                                         }))
+
+
+class LoginForm(forms.Form):
+    username = forms.CharField(label="Username", max_length=100, min_length=6, 
+                               widget=forms.TextInput(attrs={
+                                   
+                                   "class": "form-item"
+                                }))
+    
+    password = forms.CharField(label="Password", max_length=100, min_length=6,
+                               widget=forms.PasswordInput(attrs={
+                                   
+                                   "class": "form-item"
+                                }))

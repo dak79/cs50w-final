@@ -5,7 +5,7 @@
 {% endblock %}
 
 {% block body %}
-    <form>
+    <form class="access">
         <h1>Sign Up</h1>
         <fieldset>
             <legend>Your Information</legend>
@@ -13,6 +13,7 @@
             {{ register_form }}
         </fieldset>
         <button class="btn-form" type="submit">Sign Up</button>
+        <p class="form-text">Allready registered? <a class="form-link" href="{% url 'login' %}">Click here to login</a></p>
     </form>
 
 {% endblock %}

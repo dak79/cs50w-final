@@ -4,34 +4,20 @@ from django import forms
 class RegisterForm(forms.Form):
     username = forms.CharField(label="Username", max_length=100, min_length=6, 
                                widget=forms.TextInput(attrs={
-                                   
-                                   "class": "form-item"
+                                   "autofocus": True
                                 }))
-    mail = forms.EmailField(label="Email", widget=forms.EmailInput(attrs={
-                                
-                                "class": "form-item"
-                            }))
+    email = forms.EmailField(label="Email", widget=forms.EmailInput())
     password = forms.CharField(label="Password", max_length=100, min_length=6,
-                               widget=forms.PasswordInput(attrs={
-                                   
-                                   "class": "form-item"
-                                }))
+                               widget=forms.PasswordInput())
     confirmation = forms.CharField(label="Confirm Password", max_length=100, min_length=6,
-                                       widget=forms.PasswordInput(attrs={
-                                           
-                                           "class": "form-item"
-                                        }))
+                                       widget=forms.PasswordInput())
 
 
 class LoginForm(forms.Form):
     username = forms.CharField(label="Username", max_length=100, min_length=6, 
                                widget=forms.TextInput(attrs={
-                                   
-                                   "class": "form-item"
+                                   "autofocus": True,
                                 }))
     
     password = forms.CharField(label="Password", max_length=100, min_length=6,
-                               widget=forms.PasswordInput(attrs={
-                                   
-                                   "class": "form-item"
-                                }))
+                               widget=forms.PasswordInput())

@@ -34,7 +34,7 @@
             <ul class="nav-list">
                 {% if user.is_authenticated %}  
                     <li class="nav-item">
-                        <a class="nav-link" href="#">{{ user.username }}</a>
+                        <a class="nav-link" href="#">{{ user.username | capfirst }}</a>
                     </li>
                 {% endif %}
                 <li class="nav-item">
@@ -71,6 +71,18 @@
                 <span class="hamburger-name">Menu</span>  
             </button>
         </nav>
+        
+        {% if messages %}
+            <div class="messages">
+                {% for message in messages %}
+                    <p id="message" class="message-{{ message.tags }}">{{ message }}
+                        <button id="btn-message" class="btn-message-{{ message.tags }}">OK</button>
+                    </p>
+                {% endfor %}
+            </div>
+        {% endif %}
+        
+        
 
         {% block body %}{% endblock %}
 

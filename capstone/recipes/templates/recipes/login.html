@@ -5,7 +5,7 @@
 {% endblock %}
 
 {% block body %}
-    <form class="access">
+    <form class="access" action="{% url 'login' %}" method="POST">
         <h1>Login</h1>
         <fieldset>
             <legend>Your Information</legend>
@@ -14,7 +14,7 @@
         </fieldset>
         <button class="btn-form" type="submit">Login</button>
         <p class="form-text">Not registered yet? <a class="form-link" href="{% url 'register' %}">Click here to register</a></p>
-        <p class="form-text">Forgot password? <a class="form-link" href="#">Click here to recover it</a></p>
+        <p class="form-text">Forgot password? <a class="form-link" href="{% url 'password_reset' %}">Click here to recover it</a></p>
     </form>
 
 {% endblock %}

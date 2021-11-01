@@ -11,6 +11,7 @@
 // 1. Main
 document.addEventListener('DOMContentLoaded', () => {
     toggleMenu();
+    hideMessage();
 })
 
 // 2. NavBar
@@ -31,4 +32,20 @@ function toggleMenu() {
             hamburgerClose.classList.toggle('active');
             navMenu.classList.toggle('active');
         });
+}
+
+// 3. Messages
+
+/**
+ * Hide button
+ */
+
+function hideMessage(){
+    const btn = document.querySelector('#btn-message');
+
+    btn.addEventListener('click', () => {
+        const message = document.querySelector('#message');
+        message.remove();
+    })
+
 }

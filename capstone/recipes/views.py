@@ -1,5 +1,6 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth import login, logout, authenticate
+from django.contrib.auth.decorators import login_required
 from django.contrib.auth.forms import PasswordResetForm
 from django.db.models.query_utils import Q
 from django.utils.http import urlsafe_base64_encode
@@ -47,6 +48,9 @@ def register(request):
             login(request, user)
             return redirect("index")
     else:
+        if request.user.is_authenticated:
+            logout(request)
+
         context = {
             "register_form": RegisterForm()
         }
@@ -73,13 +77,17 @@ def login_view(request):
                 messages.error(request, "Invalid Username e/o Password")
                 return redirect("login")
     else:
+        
+        if request.user.is_authenticated:
+            logout(request)
+
         context = {
             "login_form": LoginForm()
         }
         
         return render(request, "recipes/login.html", context)
 
-
+@login_required(login_url="login")
 def logout_view(request):
     ''' Logout '''
     logout(request)
@@ -125,6 +133,9 @@ def password_reset_request(request):
         else:
             messages.error(request, "Invalid Email.")
     else:
+        if request.user.is_authenticated:
+            logout(request)
+        
         return render(request, "recipes/password/password_reset.html", {
         "password_reset_form": PasswordResetForm()
         })

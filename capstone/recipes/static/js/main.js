@@ -1,5 +1,5 @@
 // Toggle menu
-/* 
+/*
     INDEX
 
     1. Main
@@ -20,12 +20,12 @@ document.addEventListener('DOMContentLoaded', () => {
  * Toggle hamburger menu (mobile)
  */
 function toggleMenu() {
-    
+
         const hamburger = document.querySelector('.hamburger')
         const hamburgerOpen = document.querySelector('.hamburger-open');
         const hamburgerClose = document.querySelector('.hamburger-close');
         const navMenu = document.querySelector('.nav-list');
-    
+
         hamburger.addEventListener('click', () => {
             hamburger.classList.toggle('active')
             hamburgerOpen.classList.toggle('active');
@@ -39,7 +39,6 @@ function toggleMenu() {
 /**
  * Hide button
  */
-
 function hideMessage(){
     const btn = document.querySelector('#btn-message');
 
@@ -47,5 +46,4 @@ function hideMessage(){
         const message = document.querySelector('#message');
         message.remove();
     })
-
 }

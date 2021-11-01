@@ -9,7 +9,7 @@ from django.utils.encoding import force_bytes
 from django.template.loader import render_to_string
 from django.core.mail import send_mail, BadHeaderError
 from django.http import HttpResponse
-from django.contrib import messages 
+from django.contrib import messages
 from django.db import IntegrityError
 
 from .forms import RegisterForm, LoginForm
@@ -37,13 +37,14 @@ def register(request):
             if password != confirmation:
                 messages.error(request, 'Passwords must match')
                 return redirect("register")
-            
+
             # Create a new user
             try:
                 user = User.objects.create_user(username, email, password)
                 user.save()
             except IntegrityError:
-                messages.error(request, "Username or Email allready registered")
+                messages.error(
+                    request, "Username or Email allready registered")
                 return redirect("register")
             login(request, user)
             return redirect("index")
@@ -77,15 +78,16 @@ def login_view(request):
                 messages.error(request, "Invalid Username e/o Password")
                 return redirect("login")
     else:
-        
+
         if request.user.is_authenticated:
             logout(request)
 
         context = {
             "login_form": LoginForm()
         }
-        
+
         return render(request, "recipes/login.html", context)
+
 
 @login_required(login_url="login")
 def logout_view(request):
@@ -111,7 +113,8 @@ def password_reset_request(request):
 
                     # Configure and send mail (via terminal)
                     subject = "Password Reset Requested"
-                    email_template_name = "recipes/password/password_reset_mail.txt"
+                    email_template_name = "recipes/password/reset_mail.txt"
+
                     header = {
                         "email": user.email,
                         "domain": "127.0.0.1:8000",
@@ -123,12 +126,16 @@ def password_reset_request(request):
                     }
 
                     email = render_to_string(email_template_name, header)
-                    try: 
-                        send_mail(subject, email, 'admin@example.com' , [user.email], fail_silently=False)
+                    try:
+                        send_mail(subject, email, 'admin@example.com',
+                                  [user.email], fail_silently=False)
                     except BadHeaderError:
                         return HttpResponse("Invalid header found.")
-                    messages.success(request, 'A message with reset password instructions has been sent to your inbox.')
-                    return redirect ("index")
+                    messages.success(
+                        request,
+                        "A message with reset password instructions has been"
+                        "sent to your inbox.")
+                    return redirect("index")
             else:
                 messages.error(request, "Email does not exist.")
         else:
@@ -136,9 +143,7 @@ def password_reset_request(request):
     else:
         if request.user.is_authenticated:
             logout(request)
-        
+
         return render(request, "recipes/password/password_reset.html", {
-        "password_reset_form": PasswordResetForm()
+            "password_reset_form": PasswordResetForm()
         })
-
-

@@ -16,10 +16,12 @@ from .models import User
 
 
 def index(request):
+    ''' Homepage '''
     return render(request, "recipes/index.html")
 
 
 def register(request):
+    ''' Register '''
     if request.method == "POST":
         form = RegisterForm(request.POST)
 
@@ -53,6 +55,7 @@ def register(request):
 
 
 def login_view(request):
+    ''' Login '''
     if request.method == 'POST':
         form = LoginForm(request.POST)
 
@@ -78,12 +81,14 @@ def login_view(request):
 
 
 def logout_view(request):
+    ''' Logout '''
     logout(request)
     messages.success(request, "Successfully logged out")
     return redirect("index")
-    
+
 
 def password_reset_request(request):
+    ''' Reset password via mail (terminal)'''
     if request.method == "POST":
 
         # Get the form
@@ -99,7 +104,7 @@ def password_reset_request(request):
                     # Configure and send mail (via terminal)
                     subject = "Password Reset Requested"
                     email_template_name = "recipes/password/password_reset_mail.txt"
-                    c = {
+                    header = {
                         "email": user.email,
                         "domain": "127.0.0.1:8000",
                         "site_name": "Recipes",
@@ -109,7 +114,7 @@ def password_reset_request(request):
                         "protocol": "http"
                     }
 
-                    email = render_to_string(email_template_name, c)
+                    email = render_to_string(email_template_name, header)
                     try: 
                         send_mail(subject, email, 'admin@example.com' , [user.email], fail_silently=False)
                     except BadHeaderError:

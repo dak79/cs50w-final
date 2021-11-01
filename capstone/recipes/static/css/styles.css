@@ -221,11 +221,6 @@ ul.errorlist li {
     text-align: center;
 }
 
-.btn-reset {
-    display: block;
-    margin: 2rem auto;
-    max-width: 8rem;
-}
 
 fieldset {
     color: var(--green);
@@ -261,6 +256,12 @@ input:focus,
 input:hover {
     box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
     border: 1px solid var(--brown);
+}
+
+.btn-reset {
+    display: block;
+    margin: 2rem auto;
+    max-width: 8rem;
 }
 
 .btn-form {

@@ -52,7 +52,7 @@ MIDDLEWARE = [
 
 ROOT_URLCONF = "capstone.urls"
 
-AUTH_USER_MODEL = "recipes.User" 
+AUTH_USER_MODEL = "recipes.User"
 
 EMAIL_BACKEND = "django.core.mail.backends.console.EmailBackend"
 

@@ -17,12 +17,12 @@ from .models import User
 
 
 def index(request):
-    ''' Homepage '''
+    """ Homepage """
     return render(request, "recipes/index.html")
 
 
 def register(request):
-    ''' Register '''
+    """ Register """
     if request.method == "POST":
         form = RegisterForm(request.POST)
 
@@ -60,7 +60,7 @@ def register(request):
 
 
 def login_view(request):
-    ''' Login '''
+    """ Login """
     if request.method == 'POST':
         form = LoginForm(request.POST)
 
@@ -91,14 +91,14 @@ def login_view(request):
 
 @login_required(login_url="login")
 def logout_view(request):
-    ''' Logout '''
+    """ Logout """
     logout(request)
     messages.success(request, "Successfully logged out")
     return redirect("index")
 
 
 def password_reset_request(request):
-    ''' Reset password via mail (terminal)'''
+    """ Reset password via mail (terminal) """
     if request.method == "POST":
 
         # Get the form

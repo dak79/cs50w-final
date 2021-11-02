@@ -13,8 +13,12 @@
             {{ login_form }}
         </fieldset>
         <button class="btn-form" type="submit">Login</button>
-        <p class="form-text">Not registered yet? <a class="form-link" href="{% url 'register' %}">Click here to register</a></p>
-        <p class="form-text">Forgot password? <a class="form-link" href="{% url 'password_reset' %}">Click here to recover it</a></p>
+        <p class="form-text">Not registered yet?
+            <a class="form-link" href="{% url 'register' %}">Click here to register</a>
+        </p>
+        <p class="form-text">Forgot password?
+            <a class="form-link" href="{% url 'password_reset' %}">Click here to recover it</a>
+        </p>
     </form>
 
 {% endblock %}

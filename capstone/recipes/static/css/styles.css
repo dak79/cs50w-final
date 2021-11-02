@@ -1,4 +1,4 @@
-/* 
+/*
 
 INDEX
 
@@ -32,8 +32,6 @@ INDEX
     --light-green-1: #C6E5B3;
     --brown: #662113;
     --light-brown: #EBB591;
-    
-
 }
 
 /* 3. Fonts */
@@ -69,11 +67,11 @@ body {
     flex-direction: row;
     justify-content: space-between;
     align-items: center;
-    list-style: none;  
+    list-style: none;
 }
 
 .nav-item {
-    outline: var(--green);  
+    outline: var(--green);
     padding: 0.5rem;
     margin: 0.5rem;
 }
@@ -106,7 +104,7 @@ body {
 
 /* For tablet and mobile */
 @media only screen and (max-width: 1024px) {
-  
+
     .nav-list {
       display: none;
       background-color: var(--light-grey);
@@ -115,7 +113,7 @@ body {
       width: 100vw;
       z-index: 2;
     }
-    
+
     .nav-list.active {
       display: flex;
       flex-direction: column;
@@ -123,13 +121,13 @@ body {
       top: 2.3rem;
       left: 0;
     }
-  
+
     .nav-item {
       padding: 1rem;
       margin: 0;
       max-height: 3rem;
     }
-   
+
     .hamburger {
       display: flex;
       cursor: pointer;
@@ -138,17 +136,17 @@ body {
       color: var(--green);
       border: none;
       max-height: 3rem;
-      
+
     }
-  
+
     .hamburger-close {
       display: none;
     }
-  
+
     .hamburger-close.active {
       display: flex;
     }
-  
+
     .hamburger-open.active{
       display: none;
     }
@@ -208,7 +206,7 @@ ul.errorlist li {
     text-decoration: none;
 }
 
-.form-link:hover, 
+.form-link:hover,
 .form-link:focus {
     color: var(--brown);
 }
@@ -227,7 +225,7 @@ fieldset {
     border: 1px solid var(--green);
     padding: 1rem;
     font-weight: 700;
-    border: none;   
+    border: none;
 }
 
 label {
@@ -252,7 +250,7 @@ input[type="password"] {
     margin-bottom: 1rem;
 }
 
-input:focus, 
+input:focus,
 input:hover {
     box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
     border: 1px solid var(--brown);
@@ -278,7 +276,7 @@ input:hover {
     margin-bottom: 1rem;
 }
 
-.btn-form:hover, 
+.btn-form:hover,
 .btn-form:focus {
     box-shadow: 0 0 5px rgba(0, 0, 0, 0.4);
     border: 1px solid var(--green);
@@ -311,7 +309,7 @@ input:hover {
     justify-content: center;
     align-items: center;
     margin-top: 2rem;
-    
+
 }
 
 .message-success {
@@ -329,13 +327,13 @@ input:hover {
     border: none;
     font-weight: 700;
     margin-left: 1rem;
-    background-color: var(--light-grey);  
+    background-color: var(--light-grey);
 }
 
 .btn-message-success:focus,
 .btn-message-success:hover {
     color: var(--brown);
-    
+
 }
 
 .message-error {
@@ -353,11 +351,10 @@ input:hover {
     border: none;
     font-weight: 700;
     margin-left: 1rem;
-    background-color: var(--light-brown);  
+    background-color: var(--light-brown);
 }
 
 .btn-message-error:focus,
 .btn-message-error:hover {
-    color: var(--green);   
+    color: var(--green);
 }
-

@@ -30,8 +30,6 @@ class Preparation(models.Model):
 
 class Ingredient(models.Model):
     """ Ingredient model """
-    recipe = models.ForeignKey(Recipe, on_delete=models.CASCADE,
-                               related_name="ingredient"
-                               )
+    recipe = models.ManyToManyField(Recipe, related_name="ingredient")
     name = models.CharField(max_length=255)
     quantity = models.CharField(max_length=255)

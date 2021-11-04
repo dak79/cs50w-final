@@ -30,7 +30,12 @@ class Preparation(models.Model):
     recipe = models.ForeignKey(Recipe, on_delete=models.CASCADE,
                                related_name="instruction"
                                )
+    num = models.IntegerField()
+    imageURL = models.URLField(null=True, blank=True)
     step = models.TextField()
+
+    def __str__(self):
+        return f"{self.recipe}, step n.: {self.num}"
 
 
 class Quantity(models.Model):
@@ -62,4 +67,4 @@ class LookupIngRecQty(models.Model):
                                  )
 
     def __str__(self):
-        return f"{self.ingredient} qty: {self.quantity} in {self.recipe}"
+        return f"{self.ingredient}, qty: {self.quantity} in {self.recipe}"

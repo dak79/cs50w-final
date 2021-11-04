@@ -39,8 +39,8 @@ class LookupIngRecQtyAdmin(admin.ModelAdmin):
 
 class PreparationAdmin(admin.ModelAdmin):
     """ Preparation Admin Model"""
-    fields = ("recipe", "step")
-    list_display = ("id", "recipe", "step")
+    fields = ("recipe", "num", "imageURL", "step")
+    list_display = ("id", "recipe", "num", "imageURL", "step")
 
 
 # Register your models here.

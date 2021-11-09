@@ -10,9 +10,10 @@
 */
 
 // 1. Main
+
 document.addEventListener('DOMContentLoaded', () => {
     toggleMenu();
-    hideMessage();
+    (document.querySelector('#btn-message')) ? hideMessage() : '';
 })
 
 // 2. NavBar
@@ -22,13 +23,13 @@ document.addEventListener('DOMContentLoaded', () => {
  */
 function toggleMenu() {
 
-        const hamburger = document.querySelector('.hamburger')
+        const hamburger = document.querySelector('.hamburger');
         const hamburgerOpen = document.querySelector('.hamburger-open');
         const hamburgerClose = document.querySelector('.hamburger-close');
         const navMenu = document.querySelector('.nav-list');
 
         hamburger.addEventListener('click', () => {
-            hamburger.classList.toggle('active')
+            hamburger.classList.toggle('active');
             hamburgerOpen.classList.toggle('active');
             hamburgerClose.classList.toggle('active');
             navMenu.classList.toggle('active');

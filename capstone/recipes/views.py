@@ -11,18 +11,49 @@ from django.core.mail import send_mail, BadHeaderError
 from django.http import HttpResponse
 from django.contrib import messages
 from django.db import IntegrityError
+from django.core.paginator import Paginator
 
 from .forms import RegisterForm, LoginForm
-from .models import User
+from .models import User, Recipe
 
 
 def index(request):
-    """ Homepage """
-    return render(request, "recipes/index.html")
+    """ Homepage - All Recipes """
+
+    # client side ricetta singola
+    recipes_list = Recipe.objects.all()
+    paginator = Paginator(recipes_list, 5)
+
+    page_number = request.GET.get("page", 1)
+    page_obj = paginator.get_page(page_number)
+
+    context = {
+        "page_obj": page_obj
+    }
+
+    return render(request, "recipes/index.html", context)
+
+
+def user(request):
+    return render(request, "recipes/user.html")
+
+
+def favorite(request):
+    # paginazione
+    # client side aggiornamenti
+
+    return render(request, "recipes/favorite.html")
+
+
+def shopping_list(request):
+    # client side aggiornamenti
+
+    return render(request, "recipes/shopping_list.html")
 
 
 def register(request):
     """ Register """
+
     if request.method == "POST":
         form = RegisterForm(request.POST)
 
@@ -61,6 +92,7 @@ def register(request):
 
 def login_view(request):
     """ Login """
+
     if request.method == 'POST':
         form = LoginForm(request.POST)
 
@@ -92,6 +124,7 @@ def login_view(request):
 @login_required(login_url="login")
 def logout_view(request):
     """ Logout """
+
     logout(request)
     messages.success(request, "Successfully logged out")
     return redirect("index")
@@ -99,6 +132,7 @@ def logout_view(request):
 
 def password_reset_request(request):
     """ Reset password via mail (terminal) """
+
     if request.method == "POST":
 
         # Get the form

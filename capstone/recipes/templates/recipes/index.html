@@ -1,12 +1,53 @@
 {% extends "recipes/layout.html" %}
+{% load static %}
 
 {% block title %}
-    Home
+    All Recipes
 {% endblock %}
 
-    INDEX - INDEX - INDEX
-    Lorem ipsum dolor sit amet consectetur, adipisicing elit. Ipsam deleniti
-    corrupti dolorum sed repellendus similique nobis impedit tempora ipsa.
-    Consequuntur iste quia atque deserunt saepe nihil, error minus sed omnis!
+{% block head %}
+    <!-- JavaScript -->
+    <script src="{% static 'js/index.js' %}"></script>
+{% endblock %}
 
-{% block body %}{% endblock %}
+{% block body %}
+    {% for recipe in page_obj %}
+        <div class="card-structure">
+            <h2>{{ recipe.name }}</h2>
+            <p class="card-date"><small>Added: {{ recipe.date }}</small></p>
+            <img class="card-img" src="{{ recipe.imageURL }}" alt="photo of {{ recipe.name }}">
+            <p>{{ recipe.description}}</p>
+            <div class="card-time">
+                <p class="card-time-text">Serving: {{ recipe.serving }}</p>
+                <p class="card-time-text">Preparation: {{ recipe.preparation_time }}</p>
+                <p class="card-time-text">Cooking: {{ recipe.cooking_time }}</p>
+            </div>
+            {% if user.is_authenticated %}
+            <div class="card-footer">
+                <button class="btn-card btn-card-follow" data-id="{{ recipe.id }}">Follow</button>
+                <button class="btn-card btn-card-recipe" data-id="{{ recipe.id }}">Recipe</button>
+            </div>
+            <button class="btn-card btn-card-comment" data-id="{{ recipe.id }}">Comment</button>
+            {% endif %}
+            <div id="recipe-{{ recipe.id }}"></div>
+            <div id="comment-recipe-{{ recipe.id }}"></div>
+        </div>
+    {% endfor %}
+
+    <div class="pagination">
+        <span>
+            {% if page_obj.has_previous %}
+                <a class="pagination-link" href="?page={{ page_obj.previous_page_number }}"><i class="fas fa-arrow-left"></i></a>
+            {% endif %}
+
+            <span class="pagination-current">
+                {{ page_obj.number }} / {{ page_obj.paginator.num_pages }}
+            </span>
+            {% if page_obj.has_next %}
+                <a class="pagination-link" href="?page={{ page_obj.next_page_number }}"><i class="fas fa-arrow-right"></i></a>
+            {% endif %}
+        </span>
+    </div>
+
+
+{% endblock %}

@@ -24,6 +24,8 @@
         <link rel="preconnect" href="https://fonts.googleapis.com">
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
         <link href="https://fonts.googleapis.com/css2?family=Noto+Sans&display=swap" rel="stylesheet">
+
+        {% block head %}{% endblock %}
     </head>
     <body>
         <nav class="navbar">
@@ -31,18 +33,18 @@
             <ul class="nav-list">
                 {% if user.is_authenticated %}
                     <li class="nav-item">
-                        <a class="nav-link" href="#">{{ user.username | capfirst }}</a>
+                        <a class="nav-link" href="#" id="user">{{ user.username | capfirst }}</a>
                     </li>
                 {% endif %}
                 <li class="nav-item">
-                    <a class="nav-link" href="#">All Recipes</a>
+                    <a class="nav-link" href="{% url 'index' %}" id="all_recipes">All Recipes</a>
                 </li>
                 {% if user.is_authenticated %}
                     <li class="nav-item">
-                        <a class="nav-link" href="#">Favorite Recipes</a>
+                        <a class="nav-link" href="#" id="favorite_recipes">Favorite Recipes</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#">Shopping List</a>
+                        <a class="nav-link" href="#" id="shopping_list">Shopping List</a>
                     </li>
                 {% endif %}
                 {% if user.is_authenticated %}

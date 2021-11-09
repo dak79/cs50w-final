@@ -152,39 +152,39 @@ class RecipeModelTest(TestCase):
         s4.save()
 
     def test_recipe_count(self):
-        """ Recipe saved in db should be 1"""
-        r = Recipe.objects.all()
+        """ Recipe saved in db should be 1 """
 
+        r = Recipe.objects.all()
         self.assertEqual(r.count(), 1)
 
     def test_ingredient_count(self):
-        """ Ingredients saved in db should be 6"""
-        i = Ingredient.objects.all()
+        """ Ingredients saved in db should be 6 """
 
+        i = Ingredient.objects.all()
         self.assertEqual(i.count(), 6)
 
     def test_quantity_count(self):
         """ Quantity saved in db shoul be 5 """
-        q = Quantity.objects.all()
 
+        q = Quantity.objects.all()
         self.assertEqual(q.count(), 5)
 
     def test_lookup_count(self):
         """ LookupIngRecQty instance saved in db should be 6 """
-        c = LookupIngRecQty.objects.all()
 
+        c = LookupIngRecQty.objects.all()
         self.assertEqual(c.count(), 6)
 
     def test_step_count(self):
         """ Steps saved in db should be 4 """
-        s = Preparation.objects.all()
 
+        s = Preparation.objects.all()
         self.assertEqual(s.count(), 4)
 
     def test_recipe_identified(self):
         """ Test if the recipe is correctly identified """
-        r = Recipe.objects.get(pk=1)
 
+        r = Recipe.objects.get(pk=1)
         self.assertEqual(r.name, "Spaghetti with Tomato Sauce")
         self.assertEqual(
             r.imageURL, "https://www.giallozafferano.com/images/228-22832/"
@@ -197,28 +197,28 @@ class RecipeModelTest(TestCase):
 
     def test_ingredient_name(self):
         """ Test if the ingredient is correctly identified """
-        i = Ingredient.objects.get(pk=5)
 
+        i = Ingredient.objects.get(pk=5)
         self.assertEqual(i.name, "Garlic")
 
     def test_quantity_name(self):
         """ Test if the quantity is correctly identified """
-        q = Quantity.objects.get(pk=5)
 
+        q = Quantity.objects.get(pk=5)
         self.assertEqual(q.quantity, "1 clove")
 
     def test_lookup_name(self):
         """ Test if the lookup is correctly identified """
-        c = LookupIngRecQty.objects.get(pk=5)
 
+        c = LookupIngRecQty.objects.get(pk=5)
         self.assertEqual(c.recipe.name, "Spaghetti with Tomato Sauce")
         self.assertEqual(c.ingredient.name, "Garlic")
         self.assertEqual(c.quantity.quantity, "1 clove")
 
     def test_preparation_name(self):
         """ Test if preparation step is correctly identified """
-        s = Preparation.objects.get(pk=4)
 
+        s = Preparation.objects.get(pk=4)
         self.assertEqual(s.recipe.name, "Spaghetti with Tomato Sauce")
         self.assertEqual(s.num, 4)
         self.assertEqual(
@@ -233,35 +233,35 @@ class RoutesTest(TestCase):
 
     def test_index_route(self):
         """ Status code 200 OK """
+
         c = Client()
         response = c.get("")
-
         self.assertEqual(response.status_code, 200)
 
     def test_register_route(self):
         """ Status code 200 OK """
+
         c = Client()
         response = c.get("/register")
-
         self.assertEqual(response.status_code, 200)
 
     def test_login_route(self):
         """ Status code 200 OK """
+
         c = Client()
         response = c.get("/login")
-
         self.assertEqual(response.status_code, 200)
 
     def test_logout_route(self):
         """ Status code 302 REDIRECT """
+
         c = Client()
         response = c.get("/logout")
-
         self.assertEqual(response.status_code, 302)
 
     def test_password_reset_route(self):
         """ Status code 200 OK """
+
         c = Client()
         response = c.get("/password_reset")
-
         self.assertEqual(response.status_code, 200)

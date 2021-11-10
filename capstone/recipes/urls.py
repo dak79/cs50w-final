@@ -10,5 +10,11 @@ urlpatterns = [
     path("password_reset", views.password_reset_request, name="password_reset"),
     path("user", views.user, name="user"),
     path("favorite", views.favorite, name="favorite"),
-    path("shopping_list", views.shopping_list, name="shopping_list")
+    path("shopping_list", views.shopping_list, name="shopping_list"),
+
+    # API Endpoints
+    path("api/v1/recipe/ingredients/<int:id>",
+         views.ingredients, name="recipe"),
+    path("api/v1/recipe/preparation/<int:id>",
+         views.preparation, name="preparation")
 ]

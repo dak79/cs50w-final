@@ -12,6 +12,8 @@ INDEX
 8. Messages
 9. Card
 10. Pagination
+11. Ingredients
+12. Preparation steps
 
 */
 
@@ -120,8 +122,10 @@ body {
       display: flex;
       flex-direction: column;
       position: fixed;
-      top: 2.3rem;
+      top: 3.2rem;
       left: 0;
+      border-bottom: 1px solid var(--green);
+      box-shadow:  0 4px 2px -2px rgba(0, 0, 0, 0.2);
     }
 
     .nav-item {
@@ -443,6 +447,10 @@ input:hover {
     .card-img {
         max-width: 20rem;
     }
+
+    .btn-card {
+        width: 30%;
+    }
 }
 @media only screen and (max-width: 365px) {
     .card-img {
@@ -453,6 +461,9 @@ input:hover {
 @media only screen and (max-width: 350px) {
     .card-img {
         max-width: 16rem;
+    }
+    .btn-card {
+        width: 32%;
     }
 }
 
@@ -482,4 +493,68 @@ input:hover {
 .pagination-link:hover,
 .pagination-link:focus {
     color: var(--brown);
+}
+
+/* 11. Ingredients */
+ul.list-ingredients {
+    list-style: none;
+    margin: 0.5rem;
+}
+
+h3.title-recipe {
+    font-weight: 700;
+    padding: 0.5rem;
+    color: var(--brown);
+}
+
+.btn-shop {
+    padding: 0.5rem;
+    margin: 0.5rem;
+    color: var(--green);
+    background-color: var(--light-grey);
+    font-size: var(--font-small);
+    text-align: center;
+    border-radius: 8px;
+    max-width: 20rem;
+    border: 1px solid var(--green);
+    font-weight: 700;
+    box-shadow: 0 -1px 0 rgba(255, 255, 255, 0.1) inset;
+    margin-bottom: 1rem;
+}
+
+.btn-shop:hover,
+.btn-shop:focus {
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.4);
+    border: 1px solid var(--green);
+    background-color: var(--green);
+    color: var(--light-grey);
+}
+
+/* 12. Preparation */
+.preparation-images {
+    max-width: 20rem;
+    margin: 0.5rem;
+}
+
+ul.list-preparation {
+    list-style: none;
+    margin: 0.5rem;
+}
+
+.preparation-text {
+    padding: 0.5rem;
+    text-align: start;
+}
+
+/* Smaller display */
+
+@media only screen and (max-width: 480px) {
+    .preparation-images {
+        max-width: 20rem;
+    }
+}
+@media only screen and (max-width: 350px) {
+    .preparation-images {
+        max-width: 16rem;
+    }
 }

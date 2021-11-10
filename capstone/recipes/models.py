@@ -37,6 +37,14 @@ class Preparation(models.Model):
     imageURL = models.URLField(null=True, blank=True)
     step = models.TextField()
 
+    def serialize(self):
+        return {
+            "name": self.recipe.name,
+            "num": self.num,
+            "imageURL": self.imageURL,
+            "step": self.step
+        }
+
     def __str__(self):
         return f"{self.recipe}, step n.: {self.num}"
 
@@ -46,6 +54,11 @@ class Quantity(models.Model):
 
     quantity = models.CharField(max_length=255, blank=True)
 
+    def serialize(self):
+        return {
+            "quantity": self.quantity
+        }
+
     def __str__(self):
         return f"{self.quantity}"
 
@@ -54,6 +67,11 @@ class Ingredient(models.Model):
     """ Ingredient model """
 
     name = models.CharField(max_length=255)
+
+    def serialize(self):
+        return {
+            "name": self.name
+        }
 
     def __str__(self):
         return f"{self.name}"
@@ -71,6 +89,13 @@ class LookupIngRecQty(models.Model):
     quantity = models.ForeignKey(Quantity, on_delete=models.CASCADE,
                                  related_name="quantities"
                                  )
+
+    def serialize(self):
+        return {
+            "recipe": self.recipe.name,
+            "ingredient": self.ingredient.name,
+            "quantity": self.quantity.quantity
+        }
 
     def __str__(self):
         return f"{self.ingredient}, qty: {self.quantity} in {self.recipe}"

@@ -8,13 +8,13 @@ from django.contrib.auth.tokens import default_token_generator
 from django.utils.encoding import force_bytes
 from django.template.loader import render_to_string
 from django.core.mail import send_mail, BadHeaderError
-from django.http import HttpResponse
+from django.http import HttpResponse, JsonResponse
 from django.contrib import messages
 from django.db import IntegrityError
 from django.core.paginator import Paginator
 
 from .forms import RegisterForm, LoginForm
-from .models import User, Recipe
+from .models import User, Recipe, LookupIngRecQty, Preparation
 
 
 def index(request):
@@ -32,6 +32,28 @@ def index(request):
     }
 
     return render(request, "recipes/index.html", context)
+
+
+def ingredients(request, id):
+    """ API: ingredients for a given recipe """
+
+    ingredients = LookupIngRecQty.objects.filter(recipe=id).all()
+
+    return JsonResponse(
+                        [ingredient.serialize() for ingredient in ingredients],
+                        safe=False
+                        )
+
+
+def preparation(request, id):
+    """ API: preparation steps for a given recipe """
+
+    steps = Preparation.objects.filter(recipe=id).all().order_by("num")
+
+    return JsonResponse(
+                        [step.serialize() for step in steps],
+                        safe=False
+                        )
 
 
 def user(request):

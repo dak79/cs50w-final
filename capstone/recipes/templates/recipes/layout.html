@@ -27,42 +27,38 @@
 
         {% block head %}{% endblock %}
     </head>
+
     <body>
         <nav class="navbar">
-            
-                <img src="{% static 'img/navbar/avocado_192x192.png' %}" alt="avocado" class="navbar-img nav-item" />
-
-
-
-
+            <img src="{% static 'img/navbar/avocado_192x192.png' %}" alt="avocado" class="navbar-img nav-item" />
             <ul class="nav-list">
                 {% if user.is_authenticated %}
-                <li class="nav-item">
-                    <a class="nav-link" href="#" id="user">{{ user.username | capfirst }}</a>
-                </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#" id="user">{{ user.username | capfirst }}</a>
+                    </li>
                 {% endif %}
                 <li class="nav-item">
                     <a class="nav-link" href="{% url 'index' %}" id="all_recipes">All Recipes</a>
                 </li>
                 {% if user.is_authenticated %}
-                <li class="nav-item">
-                    <a class="nav-link" href="{% url 'favorites'%}" id="favorite_recipes">Favorite Recipes</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="#" id="shopping_list">Shopping List</a>
-                </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'favorites'%}" id="favorite_recipes">Favorite Recipes</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#" id="shopping_list">Shopping List</a>
+                    </li>
                 {% endif %}
                 {% if user.is_authenticated %}
-                <li class="nav-item">
-                    <a class="nav-link" href="{% url 'logout' %}">Logout</a>
-                </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'logout' %}">Logout</a>
+                    </li>
                 {% else %}
-                <li class="nav-item">
-                    <a class="nav-link" href="{% url 'login' %}">Login</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="{% url 'register' %}">Sign Up</a>
-                </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'login' %}">Login</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'register' %}">Sign Up</a>
+                    </li>
                 {% endif %}
             </ul>
             <form class="nav-item">

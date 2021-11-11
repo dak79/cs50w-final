@@ -2,17 +2,25 @@
 {% load static %}
 
 {% block title %}
-    All Recipes
+    {{ title }}
 {% endblock %}
 
 {% block head %}
     <!-- JavaScript -->
     <script src="{% static 'js/index.js' %}"></script>
+    {{ request.user.id | json_script:"user_id"}}
+
 {% endblock %}
 
 {% block body %}
+    {% if page_obj %}
+    <div class="card-structure" id="title-container">
+        <h1>{{ title }}</h1>
+    </div>
+    {% endif %}
+
     {% for recipe in page_obj %}
-        <div class="card-structure">
+        <div class="card-structure" id="card-{{ recipe.id }}">
             <h2>{{ recipe.name }}</h2>
             <p class="card-date"><small>Added: {{ recipe.date }}</small></p>
             <img class="card-img" src="{{ recipe.imageURL }}" alt="photo of {{ recipe.name }}">
@@ -34,20 +42,22 @@
         </div>
     {% endfor %}
 
-    <div class="pagination">
-        <span>
-            {% if page_obj.has_previous %}
-                <a class="pagination-link" href="?page={{ page_obj.previous_page_number }}"><i class="fas fa-arrow-left"></i></a>
-            {% endif %}
+    {% if page_obj %}
+        <div class="pagination" id="pagination-container">
+            <span>
+                {% if page_obj.has_previous %}
+                    <a class="pagination-link" href="?page={{ page_obj.previous_page_number }}"><i class="fas fa-arrow-left"></i></a>
+                {% endif %}
 
-            <span class="pagination-current">
-                {{ page_obj.number }} / {{ page_obj.paginator.num_pages }}
+                <span class="pagination-current">
+                    {{ page_obj.number }} / {{ page_obj.paginator.num_pages }}
+                </span>
+                {% if page_obj.has_next %}
+                    <a class="pagination-link" href="?page={{ page_obj.next_page_number }}"><i class="fas fa-arrow-right"></i></a>
+                {% endif %}
             </span>
-            {% if page_obj.has_next %}
-                <a class="pagination-link" href="?page={{ page_obj.next_page_number }}"><i class="fas fa-arrow-right"></i></a>
-            {% endif %}
-        </span>
-    </div>
+        </div>
+    {% endif %}
 
 
 {% endblock %}

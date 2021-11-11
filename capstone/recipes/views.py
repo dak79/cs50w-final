@@ -12,15 +12,15 @@ from django.http import HttpResponse, JsonResponse
 from django.contrib import messages
 from django.db import IntegrityError
 from django.core.paginator import Paginator
+import json
 
 from .forms import RegisterForm, LoginForm
-from .models import User, Recipe, LookupIngRecQty, Preparation
+from .models import User, Recipe, LookupIngRecQty, Preparation, FollowRecipe
 
 
 def index(request):
     """ Homepage - All Recipes """
 
-    # client side ricetta singola
     recipes_list = Recipe.objects.all()
     paginator = Paginator(recipes_list, 5)
 
@@ -28,7 +28,8 @@ def index(request):
     page_obj = paginator.get_page(page_number)
 
     context = {
-        "page_obj": page_obj
+        "page_obj": page_obj,
+        "title": "All Recipes"
     }
 
     return render(request, "recipes/index.html", context)
@@ -39,10 +40,8 @@ def ingredients(request, id):
 
     ingredients = LookupIngRecQty.objects.filter(recipe=id).all()
 
-    return JsonResponse(
-                        [ingredient.serialize() for ingredient in ingredients],
-                        safe=False
-                        )
+    return JsonResponse([ingredient.serialize() for ingredient in ingredients],
+                        safe=False)
 
 
 def preparation(request, id):
@@ -50,21 +49,63 @@ def preparation(request, id):
 
     steps = Preparation.objects.filter(recipe=id).all().order_by("num")
 
-    return JsonResponse(
-                        [step.serialize() for step in steps],
-                        safe=False
-                        )
+    return JsonResponse([step.serialize() for step in steps],
+                        safe=False)
 
 
 def user(request):
     return render(request, "recipes/user.html")
 
 
-def favorite(request):
-    # paginazione
-    # client side aggiornamenti
+def favorites(request):
+    """ Favorite view """
 
-    return render(request, "recipes/favorite.html")
+    favorites = FollowRecipe.objects.filter(user=request.user).all()
+    favorites_list = []
+    for favorite in favorites:
+        a = Recipe.objects.get(pk=favorite.recipe.id)
+        favorites_list.append(a)
+
+    paginator = Paginator(favorites_list, 5)
+
+    page_number = request.GET.get("page", 1)
+    page_obj = paginator.get_page(page_number)
+
+    context = {
+        "page_obj": page_obj,
+        "title": "Favorites"
+    }
+
+    return render(request, "recipes/index.html", context)
+
+
+def follow(request):
+    """
+    API:
+    add favorite (POST),
+    remove favorite (DELETE),
+    get favorite (GET)
+    """
+
+    if request.method == 'POST':
+        data = json.loads(request.body)
+
+        favorite = FollowRecipe(
+            recipe_id=int(data["recipe"]),
+            user_id=int(data["user"]))
+        favorite.save()
+        return JsonResponse({"message": "Added to favorite"})
+
+    elif request.method == 'DELETE':
+        data = json.loads(request.body)
+        favorite = FollowRecipe.objects.filter(recipe=data['id']).first()
+        favorite.delete()
+        return JsonResponse({"message": "Deleted from favorite"})
+
+    else:
+        favorites = FollowRecipe.objects.filter(user=request.user.id).all()
+        return JsonResponse([favorite.serialize() for favorite in favorites],
+                            safe=False)
 
 
 def shopping_list(request):

@@ -81,14 +81,11 @@ class LookupIngRecQty(models.Model):
     """ Lookup Quantity - Ingredient - Recipe """
 
     recipe = models.ForeignKey(Recipe, on_delete=models.CASCADE,
-                               related_name="ingredients"
-                               )
+                               related_name="ingredients")
     ingredient = models.ForeignKey(Ingredient, on_delete=models.CASCADE,
-                                   related_name="recipes"
-                                   )
+                                   related_name="recipes")
     quantity = models.ForeignKey(Quantity, on_delete=models.CASCADE,
-                                 related_name="quantities"
-                                 )
+                                 related_name="quantities")
 
     def serialize(self):
         return {
@@ -99,3 +96,21 @@ class LookupIngRecQty(models.Model):
 
     def __str__(self):
         return f"{self.ingredient}, qty: {self.quantity} in {self.recipe}"
+
+
+class FollowRecipe(models.Model):
+    """ Favorite recipes """
+
+    user = models.ForeignKey(User, on_delete=models.CASCADE,
+                             related_name="follower")
+    recipe = models.ForeignKey(Recipe, on_delete=models.CASCADE,
+                               related_name="favorite_recipe")
+
+    def serialize(self):
+        return {
+            "recipe": self.recipe.id,
+            "user": self.user.id
+        }
+
+    def __str__(self):
+        return f"{self.user} added {self.recipe} to favorite"

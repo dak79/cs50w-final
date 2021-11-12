@@ -131,12 +131,13 @@ class CommentRecipe(models.Model):
         return {
             "id": self.id,
             "user": self.user.username,
+            "user_id": self.user.id,
             "recipe": self.recipe.name,
             "recipe_id": self.recipe.id,
             "title": self.title,
             "body": self.body,
-            "date": self.date
+            "date": self.date.strftime("%d/%m/%Y, %H:%M:%S")
         }
 
     def __str__(self):
-        return f"{self.user} wrote a comment about {self.recipe} on {self.date}"
+        return f"{self.user} wrote {self.body} about {self.recipe} on {self.date}"

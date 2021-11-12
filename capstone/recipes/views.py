@@ -14,7 +14,7 @@ from django.db import IntegrityError
 from django.core.paginator import Paginator
 import json
 
-from .forms import RegisterForm, LoginForm, CommentForm
+from .forms import RegisterForm, LoginForm
 from .models import User, Recipe, LookupIngRecQty, Preparation, FollowRecipe
 from .models import CommentRecipe
 
@@ -35,7 +35,6 @@ def index(request):
     context = {
         "page_obj": page_obj,
         "title": "All Recipes",
-        "comment_form": CommentForm(auto_id="add_comment_%s")
     }
 
     return render(request, "recipes/index.html", context)
@@ -89,7 +88,6 @@ def favorites(request):
     context = {
         "page_obj": page_obj,
         "title": "Favorites",
-        "comment_form": CommentForm()
     }
 
     return render(request, "recipes/index.html", context)
@@ -129,13 +127,7 @@ def follow(request):
 
 
 def comment(request):
-    """
-    API:
-    add comment(POST),
-    get comment(GET),
-    edit comment(PUT),
-    delete comment(DELETE)
-    """
+    """ API: add comment(POST) and get all comments (GET) """
 
     # Add comment
     if request.method == 'POST':
@@ -148,10 +140,35 @@ def comment(request):
         comment.save()
 
         return JsonResponse({"message": "POST"})
+
+    # Get comments
     comments = CommentRecipe.objects.all().order_by("-date")
 
     return JsonResponse([comment.serialize() for comment in comments],
                         safe=False)
+
+
+def edit_comment(request, id):
+    """ API: get a comment(GET), edit(PUT) and delete a comment(DELETE) """
+
+    # Get the comment
+    comment = CommentRecipe.objects.get(pk=id)
+
+    # Edit comment
+    if request.method == "PUT":
+
+        data = json.loads(request.body)
+        comment.body = data["body"]
+        comment.save()
+
+        return JsonResponse({"message": "Comment successfully updated"})
+
+    # Delete comment
+    if request.method == "DELETE":
+        comment.delete()
+        return JsonResponse({"message": "Comment successfully deleted"})
+
+    return JsonResponse(comment.serialize(), safe=False)
 
 
 def shopping_list(request):

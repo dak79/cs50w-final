@@ -22,20 +22,5 @@ class LoginForm(forms.Form):
                                widget=forms.TextInput(attrs={
                                    "autofocus": True,
                                 }))
-
     password = forms.CharField(label="Password", max_length=100, min_length=6,
                                widget=forms.PasswordInput())
-
-
-class CommentForm(forms.Form):
-    """ Comment """
-
-    title = forms.CharField(label=False, max_length=255,
-                            widget=forms.TextInput(attrs={
-                                "placeholder": "Title",
-                                "id": "{{recipe.id}}"
-                                }))
-    body = forms.CharField(label=False,
-                           widget=forms.Textarea(attrs={
-                               "placeholder": "Write your comment..."
-                               }))

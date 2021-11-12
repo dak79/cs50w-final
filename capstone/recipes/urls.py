@@ -20,5 +20,7 @@ urlpatterns = [
     path("api/v1/recipe/preparation/<int:id>",
          views.preparation, name="preparation"),
     path("api/v1/recipe/follow", views.follow, name="follow"),
-    path("api/v1/recipe/comment", views.comment, name="comment")
+    path("api/v1/recipe/comment", views.comment, name="comment"),
+    path("api/v1/recipe/edit_comment/<int:id>",
+         views.edit_comment, name="edit_comment")
 ]

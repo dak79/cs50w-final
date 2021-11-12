@@ -1,3 +1,14 @@
+/*
+    INDEX
+
+1. Main
+2. Favorite recipes
+3. CRSF Token
+4. Recipes
+5. Comments
+*/
+
+// 1. Main
 document.addEventListener('DOMContentLoaded', function() {
     const btnCardFollow = document.querySelectorAll('.btn-card-follow');
     const btnCardRecipe = document.querySelectorAll('.btn-card-recipe');
@@ -54,6 +65,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
 })
 
+// 2. Favorite recipes
 /**
 * Toggle follow / unfollow
 * @param {element} button - DOM element follow/unfollow button
@@ -151,6 +163,7 @@ function btn_unfollow(id){
 
 }
 
+// 3. CRSF Token
 /**
 * Get CRSF Token from cookies
 */
@@ -169,6 +182,7 @@ function getToken() {
     }
 }
 
+// 4. Recipes
 /**
 * Show ingredient and preparation steps
 * @param {integer} id - Recipe id
@@ -270,6 +284,7 @@ function btn_recipe_close(id) {
     steps.remove();
 }
 
+// 5. Comments
 /**
 * Show comment form
 * @param {integer} id - Recipe id
@@ -292,8 +307,9 @@ function render_comments(id) {
     fetch('api/v1/recipe/comment')
     .then(response => response.json())
     .then(data => {
-        console.log(data)
-        console.log(id)
+
+        // Get user id from template
+        const user_id = JSON.parse(document.querySelector('#user_id').textContent);
 
         // Create a comment container
         const read_comment = document.createElement('div');
@@ -305,18 +321,26 @@ function render_comments(id) {
             if (id == comment['recipe_id']) {
                 const div = document.createElement('div');
                 div.setAttribute('id', `comment-${comment['id']}`)
+                div.classList.add('card-structure')
                 document.querySelector(`#read-comment-${id}`).append(div);
                 div.innerHTML = `
-                    <h4>${comment['title']}</h4>
-                    <p><small>user: ${comment['user']}</small></p>
-                    <p>${comment['body']}</p>
-                    <p><small>${comment['date']}</small></p>
-
+                    <h4 id="title-comment-${comment['id']}">${comment['title']}</h4>
+                    <p class="text-comments" id="body-comment-${comment['id']}">${comment['body']}</p>
+                    <p><small>${comment['user']} - ${comment['date']}</small></p>
                 `
+                // Edit comment button
+                if (user_id == comment['user_id']){
+                    const btn = document.createElement('button');
+                    btn.setAttribute('data-comment_id', comment['id']);
+                    btn.classList.add('btn-comment');
+                    btn.innerHTML = 'Edit';
+                    document.querySelector(`#title-comment-${comment['id']}`).append(btn);
+                    btn.addEventListener('click', event => {
+                        btn_edit_comment(event.target.dataset.comment_id);
+                    })
+                }
             }
-
         })
-
     })
     .catch(error => console.log('Error: ', error))
 }
@@ -385,16 +409,106 @@ function btn_add_comment(id){
     .catch(error => console.log('Error: ', error))
 }
 
+/**
+* Modify a comment
+* @param {integer} comment_id - comment id
+* @param {integer} recipe_id - recipe id
+*/
+function btn_edit_comment(id) {
 
+    // Get the comment
+    fetch(`api/v1/recipe/edit_comment/${id}`)
+    .then(response => response.json())
+    .then(data => {
 
+        // Populate and render the update area
+        const body = document.querySelector(`#body-comment-${id}`)
+        body.innerHTML = `
+            <textarea autofocus id="textarea-${data['id']}">${data['body']}</textarea>
+            <button class="btn-card" id="btn-save-${data['id']}" data-comment_id="${data['id']}">Save</button>
+            <button class="btn-card" id="btn-delete-${data['id']}" data-comment_id="${data['id']}">Delete</button>
+        `;
 
+        // Add save and delete button
+        const btn_save = document.querySelector(`#btn-save-${data['id']}`);
+        const btn_delete = document.querySelector(`#btn-delete-${data['id']}`);
 
+        btn_save.addEventListener('click', event => {
+            btn_save_comment(event.target.dataset.comment_id, data['recipe_id']);
+        });
 
+        btn_delete.addEventListener('click', event => {
+            btn_delete_comment(event.target.dataset.comment_id, data['recipe_id']);
+        })
+    })
+    .catch(error => console.log('Error: ', error))
+}
 
+/**
+* Update comment
+* @param {integer} comment_id - comment id
+* @param {integer} recipe_id - recipe id
+*/
+function btn_save_comment(comment_id, recipe_id) {
 
+    // Get the token
+    const csrfToken = getToken();
 
+    // Get the updated comment
+    const body = document.querySelector(`#textarea-${comment_id}`);
 
+    // Send a put request
+    fetch(`api/v1/recipe/edit_comment/${comment_id}`, {
+        method: 'PUT',
+        headers: {
+            'X-CSRFToken': csrfToken
+        },
+        body: JSON.stringify({
+            body: body.value
+        })
+    })
+    .then(response => response.json())
+    .then(data => {
+        console.log(data);
 
+        // Clean comment field
+        document.querySelector(`#read-comment-${recipe_id}`).innerHTML = '';
+
+        // Render comments
+        render_comments(recipe_id);
+    })
+    .catch(error => console.log(error))
+}
+
+/**
+* Delete comment
+* @param {integer} comment_id - comment id
+* @param {integer} recipe_id - recipe id
+*/
+function btn_delete_comment(comment_id, recipe_id) {
+
+    // Get the token
+    const csrfToken = getToken();
+
+    // Send a delete request
+    fetch(`api/v1/recipe/edit_comment/${comment_id}`, {
+        method: 'DELETE',
+        headers: {
+            'X-CSRFToken': csrfToken
+        }
+    })
+    .then(response => response.json())
+    .then(data => {
+        console.log(data);
+
+        // Clean comment field
+        document.querySelector(`#read-comment-${recipe_id}`).innerHTML = '';
+
+        // Render comments
+        render_comments(recipe_id);
+    })
+    .catch(error => console.log('Error: ', error))
+}
 
 function btn_shopping(id) {
     console.log(`Click shop button, ingredient belong to recipe id ${id}`)

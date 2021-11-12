@@ -114,3 +114,29 @@ class FollowRecipe(models.Model):
 
     def __str__(self):
         return f"{self.user} added {self.recipe} to favorite"
+
+
+class CommentRecipe(models.Model):
+    """ Users Comment"""
+
+    user = models.ForeignKey(User, on_delete=models.CASCADE,
+                             related_name="comment_writer")
+    recipe = models.ForeignKey(Recipe, on_delete=models.CASCADE,
+                               related_name="commented_recipe")
+    title = models.CharField(max_length=255)
+    body = models.TextField()
+    date = models.DateTimeField(auto_now_add=True)
+
+    def serialize(self):
+        return {
+            "id": self.id,
+            "user": self.user.username,
+            "recipe": self.recipe.name,
+            "recipe_id": self.recipe.id,
+            "title": self.title,
+            "body": self.body,
+            "date": self.date
+        }
+
+    def __str__(self):
+        return f"{self.user} wrote a comment about {self.recipe} on {self.date}"

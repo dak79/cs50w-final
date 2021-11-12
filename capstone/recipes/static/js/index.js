@@ -2,6 +2,7 @@ document.addEventListener('DOMContentLoaded', function() {
     const btnCardFollow = document.querySelectorAll('.btn-card-follow');
     const btnCardRecipe = document.querySelectorAll('.btn-card-recipe');
     const btnCardComment = document.querySelectorAll('.btn-card-comment');
+    const btnCardAddComment = document.querySelectorAll('.btn-card-add-comment')
 
     // Follow / Unfollow button
     render_btn_follow(btnCardFollow);
@@ -31,11 +32,25 @@ document.addEventListener('DOMContentLoaded', function() {
         })
     );
 
+    // Comment button
     btnCardComment.forEach(btn =>
-        btn.addEventListener('click', event =>
-            btn_comment(event.target.dataset.id)
-        )
+        btn.addEventListener('click', event => {
+            if (event.target.innerHTML === 'Comment') {
+                btn_comment(event.target.dataset.id);
+                event.target.innerHTML = 'Hide';
+            } else {
+                btn_comment_close(event.target.dataset.id);
+                event.target.innerHTML = 'Comment';
+            }
+        })
     );
+
+    btnCardAddComment.forEach(btn =>
+        btn.addEventListener('click', event => {
+            event.preventDefault();
+            btn_add_comment(event.target.dataset.id);
+        })
+    )
 
 })
 
@@ -116,7 +131,6 @@ function btn_unfollow(id){
     })
     .then(response => response.json())
     .then(data => {
-
 
         // Remove recipe from page
         const card = document.querySelector(`#card-${id}`);
@@ -256,10 +270,131 @@ function btn_recipe_close(id) {
     steps.remove();
 }
 
+/**
+* Show comment form
+* @param {integer} id - Recipe id
+*/
 function btn_comment(id) {
-    console.log(`Click comment button wit id ${id}`)
 
+    // Show comment form
+    const add_comment = document.querySelector(`#comment-recipe-${id}`);
+    add_comment.classList.remove('initial-status');
+
+    // Render comment
+    render_comments(id);
 }
+
+/**
+* Render comments
+* @param {integer} id - Recipe id
+*/
+function render_comments(id) {
+    fetch('api/v1/recipe/comment')
+    .then(response => response.json())
+    .then(data => {
+        console.log(data)
+        console.log(id)
+
+        // Create a comment container
+        const read_comment = document.createElement('div');
+        read_comment.setAttribute('id', `read-comment-${id}`);
+        document.querySelector(`#add-comment-${id}`).append(read_comment);
+
+        // Create all comment belongs to {id} recipe
+        data.forEach(comment => {
+            if (id == comment['recipe_id']) {
+                const div = document.createElement('div');
+                div.setAttribute('id', `comment-${comment['id']}`)
+                document.querySelector(`#read-comment-${id}`).append(div);
+                div.innerHTML = `
+                    <h4>${comment['title']}</h4>
+                    <p><small>user: ${comment['user']}</small></p>
+                    <p>${comment['body']}</p>
+                    <p><small>${comment['date']}</small></p>
+
+                `
+            }
+
+        })
+
+    })
+    .catch(error => console.log('Error: ', error))
+}
+
+/**
+* Hide comment form
+* @param {integer} id - Recipe id
+*/
+function btn_comment_close(id) {
+
+    // Hide comment form
+    const add_comment = document.querySelector(`#comment-recipe-${id}`);
+    add_comment.classList.add('initial-status');
+
+    // Remove comment from DOM
+    const clean_comment= document.querySelector(`#read-comment-${id}`);
+    clean_comment.remove();
+}
+
+/**
+* Add a comment to a recipe
+* @param {integer} id - Recipe id
+*/
+function btn_add_comment(id){
+
+    // Get user id from template
+    const user_id = JSON.parse(document.querySelector('#user_id').textContent);
+
+    // Get token
+    const csrfToken = getToken();
+
+    // Get input fields
+    const title = document.querySelector(`#add-comment-title-${id}`);
+    const body = document.querySelector(`#add-comment-body-${id}`);
+
+    // Send new comment to back end
+    fetch('api/v1/recipe/comment', {
+        method: 'POST',
+        headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json; charset=UTF-8',
+            'X-CSRFToken': csrfToken
+        },
+        mode: 'same-origin',
+        body: JSON.stringify({
+            user: user_id,
+            recipe: id,
+            title: title.value,
+            body: body.value
+        })
+    })
+    .then(response => response.json())
+    .then(data => {
+        console.log('Success: ', data)
+
+        // Clean input field
+        title.value = '';
+        body.value = '';
+
+        // Clean comment field
+        document.querySelector(`#read-comment-${id}`).innerHTML = '';
+
+        // Update comment field
+        render_comments(id);
+    })
+    .catch(error => console.log('Error: ', error))
+}
+
+
+
+
+
+
+
+
+
+
+
 
 function btn_shopping(id) {
     console.log(`Click shop button, ingredient belong to recipe id ${id}`)

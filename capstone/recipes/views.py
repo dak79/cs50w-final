@@ -14,8 +14,9 @@ from django.db import IntegrityError
 from django.core.paginator import Paginator
 import json
 
-from .forms import RegisterForm, LoginForm
+from .forms import RegisterForm, LoginForm, CommentForm
 from .models import User, Recipe, LookupIngRecQty, Preparation, FollowRecipe
+from .models import CommentRecipe
 
 
 def index(request):
@@ -33,7 +34,8 @@ def index(request):
 
     context = {
         "page_obj": page_obj,
-        "title": "All Recipes"
+        "title": "All Recipes",
+        "comment_form": CommentForm(auto_id="add_comment_%s")
     }
 
     return render(request, "recipes/index.html", context)
@@ -86,7 +88,8 @@ def favorites(request):
 
     context = {
         "page_obj": page_obj,
-        "title": "Favorites"
+        "title": "Favorites",
+        "comment_form": CommentForm()
     }
 
     return render(request, "recipes/index.html", context)
@@ -123,6 +126,32 @@ def follow(request):
         favorites = FollowRecipe.objects.filter(user=request.user.id).all()
         return JsonResponse([favorite.serialize() for favorite in favorites],
                             safe=False)
+
+
+def comment(request):
+    """
+    API:
+    add comment(POST),
+    get comment(GET),
+    edit comment(PUT),
+    delete comment(DELETE)
+    """
+
+    # Add comment
+    if request.method == 'POST':
+        data = json.loads(request.body)
+        print(data)
+        comment = CommentRecipe(user_id=data["user"],
+                                recipe_id=data["recipe"],
+                                title=data["title"],
+                                body=data["body"])
+        comment.save()
+
+        return JsonResponse({"message": "POST"})
+    comments = CommentRecipe.objects.all().order_by("-date")
+
+    return JsonResponse([comment.serialize() for comment in comments],
+                        safe=False)
 
 
 def shopping_list(request):

@@ -38,7 +38,17 @@
             <button class="btn-card btn-card-comment" data-id="{{ recipe.id }}">Comment</button>
             {% endif %}
             <div id="recipe-{{ recipe.id }}"></div>
-            <div id="comment-recipe-{{ recipe.id }}"></div>
+            <div id="comment-recipe-{{ recipe.id }}" class="initial-status">
+                <div class="add-comment" id="add-comment-{{ recipe.id }}">
+                    <form method="POST">
+                        {% csrf_token %}
+                        <input type="text" placeholder="Title" id="add-comment-title-{{ recipe.id }}" maxlength="255" required />
+                        <textarea rows="10" cols="40" placeholder="Write your comment..." id="add-comment-body-{{ recipe.id }}"></textarea>
+                        <button class="btn-card btn-card-add-comment" data-id="{{ recipe.id }}" type="submit">Add Comment</button>
+                    </form>
+                </div>
+                
+            </div>
         </div>
     {% endfor %}
 

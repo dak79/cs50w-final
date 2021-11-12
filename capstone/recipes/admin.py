@@ -1,7 +1,7 @@
 from django.contrib import admin
 
 from .models import User, Recipe, Preparation, Ingredient, Quantity
-from .models import LookupIngRecQty, FollowRecipe
+from .models import LookupIngRecQty, FollowRecipe, CommentRecipe
 
 
 class UserAdmin(admin.ModelAdmin):
@@ -36,7 +36,7 @@ class QuantityAdmin(admin.ModelAdmin):
 
 
 class LookupIngRecQtyAdmin(admin.ModelAdmin):
-    """ Lookup Recipe / Ingredient / Quantity Admin Model """
+    """ Lookup Recipe - Ingredient - Quantity Admin Model """
 
     fields = ("recipe", "ingredient", "quantity")
     list_display = ("id", "recipe", "ingredient", "quantity")
@@ -56,6 +56,13 @@ class FollowRecipeAdmin(admin.ModelAdmin):
     list_display = ("id", "user", "recipe")
 
 
+class CommentAdmin(admin.ModelAdmin):
+    """ Comment Admin Model """
+
+    fields = ("user", "recipe", "title", "body", "date")
+    list_display = ("id", "user", "recipe", "title", "body", "date")
+
+
 # Register your models here.
 admin.site.register(User, UserAdmin)
 admin.site.register(Recipe, RecipeAdmin)
@@ -64,3 +71,4 @@ admin.site.register(Quantity, QuantityAdmin)
 admin.site.register(LookupIngRecQty, LookupIngRecQtyAdmin)
 admin.site.register(Preparation, PreparationAdmin)
 admin.site.register(FollowRecipe, FollowRecipeAdmin)
+admin.site.register(CommentRecipe, CommentAdmin)

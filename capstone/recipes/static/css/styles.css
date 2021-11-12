@@ -13,6 +13,7 @@ INDEX
 9. Pagination
 10. Ingredients
 11. Preparation steps
+12. Comments
 
 4. Responsive
 
@@ -176,7 +177,8 @@ label {
 
 input[type="text"],
 input[type="email"],
-input[type="password"] {
+input[type="password"],
+textarea {
     border: none;
     font-size: var(--font-normal);
     height: auto;
@@ -439,6 +441,16 @@ ul.list-preparation {
 .preparation-text {
     padding: 0.5rem;
     text-align: start;
+}
+
+/* 12. Comments */
+
+
+
+
+div.initial-status {
+    display: none;
+
 }
 
 /* 4. Responsive */

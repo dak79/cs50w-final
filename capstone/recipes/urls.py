@@ -19,5 +19,6 @@ urlpatterns = [
          views.ingredients, name="recipe"),
     path("api/v1/recipe/preparation/<int:id>",
          views.preparation, name="preparation"),
-    path("api/v1/recipe/follow", views.follow, name="follow")
+    path("api/v1/recipe/follow", views.follow, name="follow"),
+    path("api/v1/recipe/comment", views.comment, name="comment")
 ]

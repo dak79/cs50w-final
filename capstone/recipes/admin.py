@@ -1,17 +1,19 @@
 from django.contrib import admin
 
 from .models import User, Recipe, Preparation, Ingredient, Quantity
-from .models import LookupIngRecQty
+from .models import LookupIngRecQty, FollowRecipe
 
 
 class UserAdmin(admin.ModelAdmin):
     """ User Admin Model"""
+
     fields = ("username", "email", "password")
     list_display = ("id", "username", "email", "password")
 
 
 class RecipeAdmin(admin.ModelAdmin):
     """ User Recipe Model"""
+
     fields = ("name", "description", "imageURL", "serving",
               "preparation_time", "cooking_time")
     list_display = ("id", "name", "description", "imageURL", "serving",
@@ -21,26 +23,37 @@ class RecipeAdmin(admin.ModelAdmin):
 
 class IngredientAdmin(admin.ModelAdmin):
     """ Ingredient Admin Model"""
+
     fields = ("name", )
     list_display = ("id", "name")
 
 
 class QuantityAdmin(admin.ModelAdmin):
     """ Quantity Admin Model"""
+
     fields = ("quantity", )
     list_display = ("id", "quantity")
 
 
 class LookupIngRecQtyAdmin(admin.ModelAdmin):
     """ Lookup Recipe / Ingredient / Quantity Admin Model """
+
     fields = ("recipe", "ingredient", "quantity")
     list_display = ("id", "recipe", "ingredient", "quantity")
 
 
 class PreparationAdmin(admin.ModelAdmin):
-    """ Preparation Admin Model"""
+    """ Preparation Admin Model """
+
     fields = ("recipe", "num", "imageURL", "step")
     list_display = ("id", "recipe", "num", "imageURL", "step")
+
+
+class FollowRecipeAdmin(admin.ModelAdmin):
+    """ Favorite recipes Admin Model """
+
+    fields = ("user", "recipe")
+    list_display = ("id", "user", "recipe")
 
 
 # Register your models here.
@@ -50,3 +63,4 @@ admin.site.register(Ingredient, IngredientAdmin)
 admin.site.register(Quantity, QuantityAdmin)
 admin.site.register(LookupIngRecQty, LookupIngRecQtyAdmin)
 admin.site.register(Preparation, PreparationAdmin)
+admin.site.register(FollowRecipe, FollowRecipeAdmin)

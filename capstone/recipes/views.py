@@ -21,10 +21,14 @@ from .models import User, Recipe, LookupIngRecQty, Preparation, FollowRecipe
 def index(request):
     """ Homepage - All Recipes """
 
+    # Get all recipes
     recipes_list = Recipe.objects.all()
-    paginator = Paginator(recipes_list, 5)
 
+    # Paginate
+    paginator = Paginator(recipes_list, 5)
     page_number = request.GET.get("page", 1)
+
+    # Page object
     page_obj = paginator.get_page(page_number)
 
     context = {
@@ -38,6 +42,7 @@ def index(request):
 def ingredients(request, id):
     """ API: ingredients for a given recipe """
 
+    # Get recipe ingredients
     ingredients = LookupIngRecQty.objects.filter(recipe=id).all()
 
     return JsonResponse([ingredient.serialize() for ingredient in ingredients],
@@ -47,6 +52,7 @@ def ingredients(request, id):
 def preparation(request, id):
     """ API: preparation steps for a given recipe """
 
+    # Get recipe preparation steps
     steps = Preparation.objects.filter(recipe=id).all().order_by("num")
 
     return JsonResponse([step.serialize() for step in steps],
@@ -60,15 +66,22 @@ def user(request):
 def favorites(request):
     """ Favorite view """
 
+    # Get the recipes followed by user
     favorites = FollowRecipe.objects.filter(user=request.user).all()
     favorites_list = []
+
+    # Get recipe information
     for favorite in favorites:
-        a = Recipe.objects.get(pk=favorite.recipe.id)
-        favorites_list.append(a)
+        recipe = Recipe.objects.get(pk=favorite.recipe.id)
 
+        # Recipe list
+        favorites_list.append(recipe)
+
+    # Paginate
     paginator = Paginator(favorites_list, 5)
-
     page_number = request.GET.get("page", 1)
+
+    # Page object
     page_obj = paginator.get_page(page_number)
 
     context = {
@@ -87,6 +100,7 @@ def follow(request):
     get favorite (GET)
     """
 
+    # Add a recipe to favorite
     if request.method == 'POST':
         data = json.loads(request.body)
 
@@ -96,6 +110,7 @@ def follow(request):
         favorite.save()
         return JsonResponse({"message": "Added to favorite"})
 
+    # Delete a recipe from favorite
     elif request.method == 'DELETE':
         data = json.loads(request.body)
         favorite = FollowRecipe.objects.filter(recipe=data['id']).first()
@@ -103,6 +118,8 @@ def follow(request):
         return JsonResponse({"message": "Deleted from favorite"})
 
     else:
+
+        # Get the favorite recipes
         favorites = FollowRecipe.objects.filter(user=request.user.id).all()
         return JsonResponse([favorite.serialize() for favorite in favorites],
                             safe=False)
@@ -120,6 +137,7 @@ def register(request):
     if request.method == "POST":
         form = RegisterForm(request.POST)
 
+        # Form validation
         if form.is_valid():
             username = form.cleaned_data["username"]
             email = form.cleaned_data["email"]
@@ -140,10 +158,14 @@ def register(request):
                 messages.error(
                     request, "Username or Email allready registered")
                 return redirect("register")
+
+            # Login
             login(request, user)
             return redirect("index")
     else:
         if request.user.is_authenticated:
+
+            # Log out authenticated user
             logout(request)
 
         context = {
@@ -159,6 +181,7 @@ def login_view(request):
     if request.method == 'POST':
         form = LoginForm(request.POST)
 
+        # Form validation
         if form.is_valid():
             username = form.cleaned_data["username"]
             password = form.cleaned_data["password"]
@@ -166,6 +189,8 @@ def login_view(request):
 
             # If authentication is successful
             if user is not None:
+
+                # Log in
                 login(request, user)
                 messages.success(request, "Successfully logged in")
                 return redirect("index")
@@ -175,6 +200,8 @@ def login_view(request):
     else:
 
         if request.user.is_authenticated:
+
+            # Log out authenticated user
             logout(request)
 
         context = {
@@ -188,6 +215,7 @@ def login_view(request):
 def logout_view(request):
     """ Logout """
 
+    # Log out
     logout(request)
     messages.success(request, "Successfully logged out")
     return redirect("index")
@@ -222,8 +250,11 @@ def password_reset_request(request):
                         "protocol": "http"
                     }
 
+                    # Render email
                     email = render_to_string(email_template_name, header)
                     try:
+
+                        # Send email
                         send_mail(subject, email, 'admin@example.com',
                                   [user.email], fail_silently=False)
                     except BadHeaderError:
@@ -239,6 +270,8 @@ def password_reset_request(request):
             messages.error(request, "Invalid Email.")
     else:
         if request.user.is_authenticated:
+
+            # Log out authenticated user
             logout(request)
 
         return render(request, "recipes/password/password_reset.html", {

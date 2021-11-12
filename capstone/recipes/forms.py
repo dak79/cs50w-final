@@ -3,6 +3,7 @@ from django import forms
 
 class RegisterForm(forms.Form):
     """ Register """
+
     username = forms.CharField(label="Username", max_length=100, min_length=6,
                                widget=forms.TextInput(attrs={
                                    "autofocus": True
@@ -16,6 +17,7 @@ class RegisterForm(forms.Form):
 
 class LoginForm(forms.Form):
     """ Login """
+
     username = forms.CharField(label="Username", max_length=100, min_length=6,
                                widget=forms.TextInput(attrs={
                                    "autofocus": True,

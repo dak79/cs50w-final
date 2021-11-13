@@ -287,16 +287,16 @@ function btn_recipe_close(id) {
 // 5. Comments
 /**
 * Show comment form
-* @param {integer} id - Recipe id
+* @param {integer} recipe_id - Recipe id
 */
-function btn_comment(id) {
+function btn_comment(recipe_id) {
 
     // Show comment form
-    const add_comment = document.querySelector(`#comment-recipe-${id}`);
+    const add_comment = document.querySelector(`#comment-recipe-${recipe_id}`);
     add_comment.classList.remove('initial-status');
 
     // Render comment
-    render_comments(id);
+    render_comments(recipe_id);
 }
 
 /**
@@ -311,10 +311,18 @@ function render_comments(id) {
         // Get user id from template
         const user_id = JSON.parse(document.querySelector('#user_id').textContent);
 
+        // Check if we have to clean the comment field
+        const read = document.querySelector(`#read-comment-${id}`);
+        if (read) {
+            read.innerHTML = '';
+        }
+
         // Create a comment container
         const read_comment = document.createElement('div');
         read_comment.setAttribute('id', `read-comment-${id}`);
+
         document.querySelector(`#add-comment-${id}`).append(read_comment);
+
 
         // Create all comment belongs to {id} recipe
         data.forEach(comment => {
@@ -326,7 +334,7 @@ function render_comments(id) {
                 div.innerHTML = `
                     <h4 id="title-comment-${comment['id']}">${comment['title']}</h4>
                     <p class="text-comments" id="body-comment-${comment['id']}">${comment['body']}</p>
-                    <p><small>${comment['user']} - ${comment['date']}</small></p>
+                    <p id="footer-comment-${comment['id']}"><small>${comment['user']} - ${comment['date']}</small></p>
                 `
                 // Edit comment button
                 if (user_id == comment['user_id']){
@@ -361,10 +369,10 @@ function btn_comment_close(id) {
 }
 
 /**
-* Add a comment to a recipe
+* Add comment to a recipe
 * @param {integer} id - Recipe id
 */
-function btn_add_comment(id){
+function btn_add_comment(id) {
 
     // Get user id from template
     const user_id = JSON.parse(document.querySelector('#user_id').textContent);
@@ -375,6 +383,7 @@ function btn_add_comment(id){
     // Get input fields
     const title = document.querySelector(`#add-comment-title-${id}`);
     const body = document.querySelector(`#add-comment-body-${id}`);
+
 
     // Send new comment to back end
     fetch('api/v1/recipe/comment', {
@@ -400,10 +409,7 @@ function btn_add_comment(id){
         title.value = '';
         body.value = '';
 
-        // Clean comment field
-        document.querySelector(`#read-comment-${id}`).innerHTML = '';
-
-        // Update comment field
+        // Update comments
         render_comments(id);
     })
     .catch(error => console.log('Error: ', error))
@@ -411,8 +417,7 @@ function btn_add_comment(id){
 
 /**
 * Modify a comment
-* @param {integer} comment_id - comment id
-* @param {integer} recipe_id - recipe id
+* @param {integer} id - recipe id
 */
 function btn_edit_comment(id) {
 
@@ -438,7 +443,7 @@ function btn_edit_comment(id) {
         });
 
         btn_delete.addEventListener('click', event => {
-            btn_delete_comment(event.target.dataset.comment_id, data['recipe_id']);
+            btn_delete_comment(event.target.dataset.comment_id);
         })
     })
     .catch(error => console.log('Error: ', error))
@@ -471,11 +476,9 @@ function btn_save_comment(comment_id, recipe_id) {
     .then(data => {
         console.log(data);
 
-        // Clean comment field
-        document.querySelector(`#read-comment-${recipe_id}`).innerHTML = '';
-
         // Render comments
         render_comments(recipe_id);
+
     })
     .catch(error => console.log(error))
 }
@@ -483,9 +486,8 @@ function btn_save_comment(comment_id, recipe_id) {
 /**
 * Delete comment
 * @param {integer} comment_id - comment id
-* @param {integer} recipe_id - recipe id
 */
-function btn_delete_comment(comment_id, recipe_id) {
+function btn_delete_comment(comment_id) {
 
     // Get the token
     const csrfToken = getToken();
@@ -502,10 +504,9 @@ function btn_delete_comment(comment_id, recipe_id) {
         console.log(data);
 
         // Clean comment field
-        document.querySelector(`#read-comment-${recipe_id}`).innerHTML = '';
+        const comment = document.querySelector(`#comment-${comment_id}`);
+        comment.remove()
 
-        // Render comments
-        render_comments(recipe_id);
     })
     .catch(error => console.log('Error: ', error))
 }

@@ -9,6 +9,9 @@
     <!-- JavaScript -->
     <script src="{% static 'js/index.js' %}"></script>
     {{ request.user.id | json_script:"user_id"}}
+    {{ request.user.username | json_script:"username"}}
+
+
 
 {% endblock %}
 

@@ -132,7 +132,6 @@ def comment(request):
     # Add comment
     if request.method == 'POST':
         data = json.loads(request.body)
-        print(data)
         comment = CommentRecipe(user_id=data["user"],
                                 recipe_id=data["recipe"],
                                 title=data["title"],

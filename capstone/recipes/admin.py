@@ -63,6 +63,13 @@ class CommentAdmin(admin.ModelAdmin):
     list_display = ("id", "user", "recipe", "title", "body", "date")
 
 
+class ShoppingList(admin.ModelAdmin):
+    """Shopping list Admin Model"""
+
+    fields = ("user", "recipe")
+    list_display = ("id", "user", "recipe")
+
+
 # Register your models here.
 admin.site.register(User, UserAdmin)
 admin.site.register(Recipe, RecipeAdmin)

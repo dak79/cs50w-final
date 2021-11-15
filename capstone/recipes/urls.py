@@ -12,7 +12,6 @@ urlpatterns = [
     path("password_reset", views.password_reset_request, name="password_reset"),
     path("user", views.user, name="user"),
     path("favorites", views.favorites, name="favorites"),
-    path("shopping_list", views.shopping_list, name="shopping_list"),
 
     # API Endpoints
     path("api/v1/recipe/ingredients/<int:id>",
@@ -22,5 +21,7 @@ urlpatterns = [
     path("api/v1/recipe/follow", views.follow, name="follow"),
     path("api/v1/recipe/comment", views.comment, name="comment"),
     path("api/v1/recipe/edit_comment/<int:id>",
-         views.edit_comment, name="edit_comment")
+         views.edit_comment, name="edit_comment"),
+    path("api/v1/recipe/shopping_list",
+         views.shopping_list, name="shopping_list")
 ]

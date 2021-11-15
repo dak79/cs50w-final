@@ -89,6 +89,7 @@ class LookupIngRecQty(models.Model):
 
     def serialize(self):
         return {
+            "recipe_id": self.recipe.id,
             "recipe": self.recipe.name,
             "ingredient": self.ingredient.name,
             "quantity": self.quantity.quantity
@@ -140,4 +141,24 @@ class CommentRecipe(models.Model):
         }
 
     def __str__(self):
-        return f"{self.user} wrote {self.body} about {self.recipe} on {self.date}"
+        return f"{self.user} wrote about {self.recipe} on {self.date}"
+
+
+class ShoppingList(models.Model):
+    """ Shopping list """
+
+    user = models.ForeignKey(User, on_delete=models.CASCADE,
+                             related_name="buyer")
+    recipe = models.ForeignKey(Recipe, on_delete=models.CASCADE,
+                               related_name="to_buy")
+
+    def __str__(self):
+        return f"{self.recipe} added to shopping list"
+
+    def serialize(self):
+        return {
+            "username": self.user.username,
+            "user_id": self.user.id,
+            "recipe_name": self.recipe.name,
+            "recipe_id": self.recipe.id
+        }

@@ -207,12 +207,12 @@ function btn_recipe(id) {
 
         // Create button for shopping list
         const btn_shop = document.createElement('button');
-        btn_shop.innerHTML = 'Add Ingredient to Shop List';
+        btn_shop.innerHTML = 'Add Ingredients to Shop List';
         btn_shop.classList.add('btn-shop')
         btn_shop.setAttribute(`data-id`, `${id}`);
         div.append(btn_shop);
         btn_shop.addEventListener('click', event => {
-            btn_shopping(event.target.dataset.id);
+            btn_add_ingredients(event.target.dataset.id);
 
         })
 
@@ -282,6 +282,34 @@ function btn_recipe_close(id) {
 
     // Remove steps;
     steps.remove();
+}
+
+/**
+* Add ingredients to shopping list
+* @param {integer} id - Recipe id
+*/
+function btn_add_ingredients(id) {
+    console.log(`Click shop button, ingredient belong to recipe id ${id}`)
+
+    // Get user id from template
+    const user_id = JSON.parse(document.querySelector('#user_id').textContent);
+
+    // Get token
+    const csrfToken = getToken();
+
+    fetch('api/v1/recipe/shopping_list', {
+        method: 'POST',
+        headers: {
+            'X-CSRFToken': csrfToken
+        },
+        body: JSON.stringify({
+            user: user_id,
+            recipe: id
+        })
+    })
+    .then(response => response.json())
+    .then(data => console.log(data))
+    .catch(error => console.log('Error: ', error))
 }
 
 // 5. Comments
@@ -509,8 +537,4 @@ function btn_delete_comment(comment_id) {
 
     })
     .catch(error => console.log('Error: ', error))
-}
-
-function btn_shopping(id) {
-    console.log(`Click shop button, ingredient belong to recipe id ${id}`)
 }

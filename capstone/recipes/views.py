@@ -16,7 +16,7 @@ import json
 
 from .forms import RegisterForm, LoginForm
 from .models import User, Recipe, LookupIngRecQty, Preparation, FollowRecipe
-from .models import CommentRecipe
+from .models import CommentRecipe, ShoppingList
 
 
 def index(request):
@@ -138,7 +138,7 @@ def comment(request):
                                 body=data["body"])
         comment.save()
 
-        return JsonResponse({"message": "POST"})
+        return JsonResponse({"message": "Comment added"})
 
     # Get comments
     comments = CommentRecipe.objects.all().order_by("-date")
@@ -171,9 +171,47 @@ def edit_comment(request, id):
 
 
 def shopping_list(request):
-    # client side aggiornamenti
+    """ API:
+    add ingredients(POST),
+    get ingerdients(GET),
+    delete ingredients(DELETE)
+    """
 
-    return render(request, "recipes/shopping_list.html")
+    # Add recipe to shopping list
+    if request.method == 'POST':
+        data = json.loads(request.body)
+
+        recipe = ShoppingList(user_id=data["user"],
+                              recipe_id=data["recipe"])
+        recipe.save()
+
+        return JsonResponse({"message": "Recipes added to shopping list"})
+
+    # Delete recipe from shopping list
+    if request.method == 'DELETE':
+        data = json.loads(request.body)
+
+        recipe = ShoppingList.objects.get(pk=int(data["id"]))
+        recipe.delete()
+
+        return JsonResponse({"message": "Deleted from shopping list"})
+
+    # Get all ingredients and recipes in shopping list
+    recipes = ShoppingList.objects.filter(user=request.user).all()
+
+    ingredient_list = []
+
+    for recipe in recipes:
+        ingredients = LookupIngRecQty.objects.filter(
+            recipe=recipe.recipe.id).all()
+        ingredient_list.append(ingredients)
+
+    context = {
+        "recipes": recipes,
+        "ingredients": list(ingredient_list)
+    }
+
+    return render(request, "recipes/shopping_list.html", context)
 
 
 def register(request):

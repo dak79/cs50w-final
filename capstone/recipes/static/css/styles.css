@@ -59,7 +59,7 @@ body {
 .navbar {
     display: flex;
     flex-direction: row;
-    justify-content: space-between;
+    justify-content: start;
     align-items: center;
     list-style: none;
     text-align: center;
@@ -72,7 +72,7 @@ body {
 .nav-list {
     display: flex;
     flex-direction: row;
-    justify-content: space-between;
+    justify-content: start;
     align-items: center;
     list-style: none;
 }
@@ -522,7 +522,7 @@ input[type="checkbox"] {
   display: none;
 }
 
-input[type="checkbox"]+ *::before {
+input[type="checkbox"] + *::before {
   content: "";
   display: inline-block;
   vertical-align: bottom;
@@ -550,6 +550,11 @@ input[type="checkbox"]:checked + * {
 @media only screen and (max-width: 1024px) {
 
     /* NavBar*/
+
+    .navbar {
+        justify-content: space-between;
+    }
+    
     .nav-list {
       display: none;
       background-color: var(--light-grey);
@@ -600,7 +605,8 @@ input[type="checkbox"]:checked + * {
     }
 
     .card-structure,
-    .pagination {
+    .pagination,
+    .shopping-list-structure {
         max-width: 30rem;
     }
 
@@ -621,7 +627,8 @@ input[type="checkbox"]:checked + * {
     }
 
     .card-structure,
-    .pagination {
+    .pagination,
+    .shopping-list-structure {
         max-width: 24rem;
     }
 
@@ -653,8 +660,17 @@ input[type="checkbox"]:checked + * {
     }
 
     .card-structure,
-    .pagination {
-        max-width: 18rem;
+    .pagination,
+    .shopping-list-structure {
+        max-width: 16rem;
+    }
+
+    .shopping-list-structure {
+        max-width: 21rem;
+    }
+
+    .btn-shopping-list {
+        width: 30%
     }
 
     .btn-card {
@@ -692,6 +708,11 @@ input[type="checkbox"]:checked + * {
         max-width: 18rem;
     }
 
+    .shopping-list-structure {
+        max-width: 19rem;
+        font-size: 0.9rem;
+    }
+
     .card-time-text {
         padding: 0.5rem;
     }
@@ -717,6 +738,10 @@ input[type="checkbox"]:checked + * {
     .card-structure,
     .pagination {
         max-width: 14rem;
+    }
+    .shopping-list-structure {
+        max-width: 16rem;
+        font-size: 0.7rem;
     }
 
     .card-time-text {

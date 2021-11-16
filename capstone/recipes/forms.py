@@ -1,4 +1,5 @@
 from django import forms
+from .models import User
 
 
 class RegisterForm(forms.Form):
@@ -24,3 +25,20 @@ class LoginForm(forms.Form):
                                 }))
     password = forms.CharField(label="Password", max_length=100, min_length=6,
                                widget=forms.PasswordInput())
+
+
+class UserForm(forms.Form, forms.ModelForm):
+    class Meta:
+        model = User
+        fields = ("username", "email", "image")
+
+    username = forms.CharField(required=False, label="Username", max_length=100,
+                               min_length=6,
+                               widget=forms.TextInput(attrs={
+                                    "autofocus": True,
+                                    })
+                               )
+
+    email = forms.EmailField(
+        label="Email", widget=forms.EmailInput(), required=False)
+    image = forms.ImageField(required=False)

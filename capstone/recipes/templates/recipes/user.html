@@ -1,1 +1,22 @@
-USER
+{% extends "recipes/layout.html" %}
+
+{% block title %}
+    {{ request.user.username | capfirst }}
+{% endblock %}
+
+{% block body %}
+    <div class="card-structure">
+        <h1 class="card-title"> {{ request.user.username | capfirst }}</h1>
+        {% if request.user.image %}
+            <img src="{{ request.user.image.url }}" alt="User image" class="user-image"/>
+        {% endif %}
+        <hr>
+        <form action="{% url 'user' %}" method="POST" enctype="multipart/form-data">
+            {% csrf_token %}
+            {{ user_form }}
+            <button class="btn-form" type="submit">Change User Data</button>
+        </form>
+        <br>
+        <a class="btn-card user-link" href="{% url 'password_reset' %}">Change password</a>
+    </div>
+{% endblock %}

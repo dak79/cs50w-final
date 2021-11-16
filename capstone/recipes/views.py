@@ -14,7 +14,7 @@ from django.db import IntegrityError
 from django.core.paginator import Paginator
 import json
 
-from .forms import RegisterForm, LoginForm
+from .forms import RegisterForm, LoginForm, UserForm
 from .models import User, Recipe, LookupIngRecQty, Preparation, FollowRecipe
 from .models import CommentRecipe, ShoppingList
 
@@ -61,7 +61,26 @@ def preparation(request, id):
 
 
 def user(request):
-    return render(request, "recipes/user.html")
+    """ User page view """
+
+    form = UserForm(initial={"username": request.user.username,
+                             "email": request.user.email,
+                             "image": request.user.image
+                             })
+
+    if request.method == "POST":
+        form = UserForm(request.POST, request.FILES, instance=request.user)
+        if form.is_valid():
+            user = form.save(commit=False)
+            user.save()
+
+            return redirect("user")
+    if request.user.image == None:
+        request.user.image = "img/profile_image/10warhol_zGQrZpx.jpg"
+    context = {
+        "user_form": form
+    }
+    return render(request, "recipes/user.html", context)
 
 
 def favorites(request):

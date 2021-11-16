@@ -7,8 +7,8 @@ from .models import LookupIngRecQty, FollowRecipe, CommentRecipe
 class UserAdmin(admin.ModelAdmin):
     """ User Admin Model"""
 
-    fields = ("username", "email", "password")
-    list_display = ("id", "username", "email", "password")
+    fields = ("username", "email", "password", "image")
+    list_display = ("id", "username", "email", "password", "image")
 
 
 class RecipeAdmin(admin.ModelAdmin):

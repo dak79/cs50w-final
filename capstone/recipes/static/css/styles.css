@@ -14,7 +14,9 @@ INDEX
 10. Ingredients
 11. Preparation steps
 12. Comments
-13. shopping list
+13. Shopping list
+14. User page
+
 4. Responsive
 
 */
@@ -178,6 +180,7 @@ label {
 input[type="text"],
 input[type="email"],
 input[type="password"],
+input[type="file"],
 textarea {
     border: none;
     font-size: var(--font-normal);
@@ -294,6 +297,7 @@ input:hover {
     border: 1px solid var(--green);
     text-align: center;
     color: var(--green);
+    font-weight: 700;
 }
 
 .card-title {
@@ -546,15 +550,28 @@ input[type="checkbox"]:checked + * {
   text-decoration: line-through;
 }
 
+/* 14. User page */
+.user-image {
+    width: 4rem;
+    border-radius: 50%;
+}
+
+.user-link {
+    text-decoration: none;
+}
+
+a.card-structure {
+    margin-top: 1rem;
+    font-weight: 700;
+}
 /* 4. Responsive */
 @media only screen and (max-width: 1024px) {
 
     /* NavBar*/
-
     .navbar {
         justify-content: space-between;
     }
-    
+
     .nav-list {
       display: none;
       background-color: var(--light-grey);
@@ -649,6 +666,10 @@ input[type="checkbox"]:checked + * {
     .preparation-images {
         max-width: 20rem;
     }
+
+    input ~ a {
+        font-size: 0.8rem;
+    }
 }
 
 @media only screen and (max-width: 376px) {
@@ -686,6 +707,10 @@ input[type="checkbox"]:checked + * {
         max-width: 8rem;
     }
 
+    input ~ a {
+        font-size: 0.4rem;
+    }
+
     /* Preparation */
     .preparation-images {
         max-width: 15rem;
@@ -720,6 +745,10 @@ input[type="checkbox"]:checked + * {
     /* Search */
     .search-field {
         max-width: 6.2rem;
+    }
+
+    input ~ a {
+        font-size: 0.5rem;
     }
 
     /* Form */
@@ -766,5 +795,9 @@ input[type="checkbox"]:checked + * {
     /* Preparation */
     .preparation-images {
         max-width: 11rem;
+    }
+
+    input ~ a {
+        font-size: 0.3rem;
     }
 }

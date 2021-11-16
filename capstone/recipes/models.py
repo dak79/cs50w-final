@@ -3,13 +3,14 @@ from django.contrib.auth.models import AbstractUser
 
 
 class User(AbstractUser):
-    """ Django User model """
+    """ Django Custom User model """
+    image = models.ImageField(upload_to="profile_image", blank=True, null=True)
 
     pass
 
 
 # Add unique constraint to user.mail field
-User._meta.get_field('email')._unique = True
+User._meta.get_field("email")._unique = True
 
 
 class Recipe(models.Model):

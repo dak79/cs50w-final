@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 {% load static %}
+{% load cache %}
 
 <html lang="en">
     <head>
@@ -29,6 +30,7 @@
     </head>
 
     <body>
+        
         <nav class="navbar">
             <img src="{% static 'img/navbar/avocado_192x192.png' %}" alt="avocado" class="navbar-img nav-item" />
             <ul class="nav-list">

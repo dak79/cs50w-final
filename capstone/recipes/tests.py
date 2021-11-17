@@ -2,6 +2,7 @@ from django.test import TestCase
 from django.test import Client
 
 from .models import Recipe, Preparation, Ingredient, Quantity, LookupIngRecQty
+from .models import User, FollowRecipe, ShoppingList, CommentRecipe
 
 
 class RecipeModelTest(TestCase):
@@ -12,6 +13,8 @@ class RecipeModelTest(TestCase):
     - Quantity,
     - Lookup Recipe Ingredient Quantity,
     - Preparation Steps
+    - FollowRecipe
+    - Shopping List
     """
 
     def setUp(self):
@@ -27,6 +30,13 @@ class RecipeModelTest(TestCase):
                     )
 
         r1.save()
+
+        # Create User
+        u1 = User(username="daniele",
+                  email="danielecampari@gmail.com",
+                  password="12345678")
+
+        u1.save()
 
         # Create ingredients
         i1 = Ingredient(name="Spaghetti")
@@ -151,6 +161,27 @@ class RecipeModelTest(TestCase):
                          )
         s4.save()
 
+        # Follow a recipe
+        u1 = User.objects.get(pk=1)
+        r3 = Recipe.objects.get(pk=1)
+        f1 = FollowRecipe(user=u1, recipe=r3)
+        f1.save()
+
+        # Put a recipe in shopping list
+        u2 = User.objects.get(pk=1)
+        r4 = Recipe.objects.get(pk=1)
+        sl = ShoppingList(user=u2, recipe=r4)
+        sl.save()
+
+        # Create a comment
+        u3 = User.objects.get(pk=1)
+        r5 = Recipe.objects.get(pk=1)
+        c = CommentRecipe(user=u3,
+                          recipe=r5,
+                          title="Very good",
+                          body="Very good recipe, try it!")
+        c.save()
+
     def test_recipe_count(self):
         """ Recipe saved in db should be 1 """
 
@@ -227,6 +258,37 @@ class RecipeModelTest(TestCase):
                         )
         self.assertEqual(s.step, "Drain the spaghetti al dente...")
 
+    def test_follow_recipe(self):
+        """ Recipe followed should be 1 """
+
+        f = FollowRecipe.objects.filter(pk=1).all()
+        self.assertEqual(f.count(), 1)
+
+    def test_shopping_list(self):
+        """ Recipe in shopping list should be 1 """
+
+        sl = ShoppingList.objects.filter(pk=1).all()
+        self.assertEqual(sl.count(), 1)
+
+    def test_user(self):
+        """ User should be 1 """
+
+        u = User.objects.filter(pk=1).all()
+        self.assertEqual(u.count(), 1)
+
+    def test_comment(self):
+        """
+        Comment count should be 1
+        Comment title: "Very good"
+        Comment body: "Very good recipe, try it!"
+        """
+
+        cn = CommentRecipe.objects.filter(pk=1).all()
+        co = CommentRecipe.objects.get(pk=1)
+        self.assertEqual(cn.count(), 1)
+        self.assertEqual(co.title, "Very good")
+        self.assertEqual(co.body, "Very good recipe, try it!")
+
 
 class RoutesTest(TestCase):
     """ Test routes """
@@ -265,3 +327,17 @@ class RoutesTest(TestCase):
         c = Client()
         response = c.get("/password_reset")
         self.assertEqual(response.status_code, 200)
+
+    def test_user_route(self):
+        """ Status code 302 REDIRECT """
+
+        c = Client()
+        response = c.get("/user")
+        self.assertEqual(response.status_code, 302)
+
+    def test_favorites_route(self):
+        """ Status code 302 REDIRECT """
+
+        c = Client()
+        response = c.get("/favorites")
+        self.assertEqual(response.status_code, 302)

@@ -207,12 +207,31 @@ function btn_recipe(id) {
 
         // Create button for shopping list
         const btn_shop = document.createElement('button');
-        btn_shop.innerHTML = 'Add Ingredients to Shop List';
+        btn_shop.innerHTML = 'Add to Shopping List';
         btn_shop.classList.add('btn-shop')
         btn_shop.setAttribute(`data-id`, `${id}`);
+        fetch(`api/v1/recipe/shopping_list_recipe/${id}`)
+        .then(response => response.json())
+        .then(data => { console.log(data)
+            if (data) {
+                btn_shop.innerHTML = 'Remove from Shopping List';
+            } else {
+                btn_shop.innerHTML = 'Add to Shopping List';
+            }
+        })
+        .catch(error => console.log('Error: ', error))
+
         div.append(btn_shop);
+
         btn_shop.addEventListener('click', event => {
-            btn_add_ingredients(event.target.dataset.id);
+            if (event.target.innerHTML === 'Add to Shopping List') {
+                    btn_add_ingredients(event.target.dataset.id);
+                    event.target.innerHTML = 'Remove from Shopping List';
+
+                } else {
+                    btn_remove_ingredients(event.target.dataset.id);
+                    event.target.innerHTML = 'Add to Shopping List';
+                }
 
         })
 
@@ -306,6 +325,27 @@ function btn_add_ingredients(id) {
             user: user_id,
             recipe: id
         })
+    })
+    .then(response => response.json())
+    .then(data => console.log(data))
+    .catch(error => console.log('Error: ', error))
+}
+
+/**
+* Delete recipe ingredients from shopping list
+* @param {integer} id - Recipe id
+*/
+function btn_remove_ingredients(id) {
+
+    // Get token
+    const csrfToken = getToken();
+
+    // Delete request for ${id} shopping list
+    fetch(`api/v1/recipe/shopping_list_recipe/${id}`, {
+        method: 'DELETE',
+        headers: {
+                'X-CSRFToken': csrfToken
+        }
     })
     .then(response => response.json())
     .then(data => console.log(data))

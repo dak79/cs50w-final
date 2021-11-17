@@ -28,6 +28,8 @@ class LoginForm(forms.Form):
 
 
 class UserForm(forms.Form, forms.ModelForm):
+    """ User Form """
+
     class Meta:
         model = User
         fields = ("username", "email", "image")
@@ -39,6 +41,6 @@ class UserForm(forms.Form, forms.ModelForm):
                                     })
                                )
 
-    email = forms.EmailField(
-        label="Email", widget=forms.EmailInput(), required=False)
+    email = forms.EmailField(label="Email",
+                             widget=forms.EmailInput(), required=False)
     image = forms.ImageField(required=False)

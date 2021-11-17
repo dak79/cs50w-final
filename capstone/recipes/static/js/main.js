@@ -1,4 +1,4 @@
-// Toggle menu
+
 /*
     INDEX
 
@@ -10,14 +10,12 @@
 */
 
 // 1. Main
-
 document.addEventListener('DOMContentLoaded', () => {
     toggleMenu();
     (document.querySelector('#btn-message')) ? hideMessage() : '';
 })
 
 // 2. NavBar
-
 /**
  * Toggle hamburger menu (mobile)
  */
@@ -37,7 +35,6 @@ function toggleMenu() {
 }
 
 // 3. Messages
-
 /**
  * Hide button
  */

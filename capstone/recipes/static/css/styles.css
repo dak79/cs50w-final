@@ -1,5 +1,4 @@
 /*
-
 INDEX
 
 1. Reset
@@ -16,9 +15,7 @@ INDEX
 12. Comments
 13. Shopping list
 14. User page
-
-4. Responsive
-
+15. Responsive
 */
 
 /* 1. Reset */
@@ -61,7 +58,7 @@ body {
 .navbar {
     display: flex;
     flex-direction: row;
-    justify-content: start;
+    justify-content: space-between;
     align-items: center;
     list-style: none;
     text-align: center;
@@ -448,7 +445,6 @@ ul.list-preparation {
 }
 
 /* 12. Comments */
-
 .text-comments {
     color: var(--brown);
     padding: 1rem;
@@ -564,7 +560,8 @@ a.card-structure {
     margin-top: 1rem;
     font-weight: 700;
 }
-/* 4. Responsive */
+
+/* 15. Responsive */
 @media only screen and (max-width: 1024px) {
 
     /* NavBar*/

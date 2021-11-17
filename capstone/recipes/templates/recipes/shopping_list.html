@@ -6,33 +6,35 @@
 {% endblock%}
 
 {% block head %}
-<!-- JavaScript -->
-<script src="{% static 'js/shopping_list.js' %}"></script>
+    <!-- JavaScript -->
+    <script src="{% static 'js/shopping_list.js' %}"></script>
 {% endblock %}
+
 {% block body %}
 
-{% if recipes %}
-    {% for recipe in recipes %}
-        <div class="shopping-list-structure" id="shopping-list-structure-{{ recipe.id }}">
+    {% if recipes %}
+        <div class="card-structure" id="title-container">
+            <h1 class="card-title">Shopping List</h1>
+        </div>
+        {% for recipe in recipes %}
+            <div class="shopping-list-structure" id="shopping-list-structure-{{ recipe.id }}">
 
-        <h4 class="shopping-list-title">{{ recipe.recipe }}</h4>
-        <button class="btn-shopping-list btn-list-delete" data-id="{{ recipe.id }}" id="btn-list-delete-{{ recipe.id }}">Delete</button>
-        <ul class="ingredient-list">
-        {% for list_ingredient in ingredients %}
-            {%for ingredient in list_ingredient %}
-                {% if ingredient.recipe.id == recipe.recipe_id %}
-                    <li>
-                        <div class="checkbox-wrapper">
-                            <input type="checkbox" class="recipe-mark" name="{{ ingredient.ingredient }} - {{ ingredient.quantity }}" id="{{ ingredient.ingredient }} - {{ ingredient.quantity }}" >
-                            <label for="{{ ingredient.ingredient }} - {{ ingredient.quantity }}">{{ ingredient.ingredient }} - {{ ingredient.quantity }}</label>
-                        </div>
-                    </li>
-                {% endif %}
+            <h4 class="shopping-list-title">{{ recipe.recipe }}</h4>
+            <button class="btn-shopping-list btn-list-delete" data-id="{{ recipe.id }}" id="btn-list-delete-{{ recipe.id }}">Delete</button>
+            <ul class="ingredient-list">
+            {% for list_ingredient in ingredients %}
+                {%for ingredient in list_ingredient %}
+                    {% if ingredient.recipe.id == recipe.recipe_id %}
+                        <li>
+                                <input type="checkbox" class="recipe-mark" name="{{ ingredient.ingredient }} - {{ ingredient.quantity }}" id="{{ ingredient.ingredient }} - {{ ingredient.quantity }}" >
+                                <label for="{{ ingredient.ingredient }} - {{ ingredient.quantity }}">{{ ingredient.ingredient }} - {{ ingredient.quantity }}</label>
+                        </li>
+                    {% endif %}
+                {% endfor %}
             {% endfor %}
+            </ul>
+        </div>
         {% endfor %}
-        </ul>
-    </div>
-    {% endfor %}
-{% endif %}
+    {% endif %}
 
 {% endblock %}

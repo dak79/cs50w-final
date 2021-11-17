@@ -40,6 +40,7 @@ def index(request):
     return render(request, "recipes/index.html", context)
 
 
+@login_required(login_url="login")
 def ingredients(request, id):
     """ API: ingredients for a given recipe """
 
@@ -50,6 +51,7 @@ def ingredients(request, id):
                         safe=False)
 
 
+@login_required(login_url="login")
 def preparation(request, id):
     """ API: preparation steps for a given recipe """
 
@@ -60,6 +62,7 @@ def preparation(request, id):
                         safe=False)
 
 
+@login_required(login_url="login")
 def user(request):
     """ User page view """
 
@@ -75,14 +78,14 @@ def user(request):
             user.save()
 
             return redirect("user")
-    if request.user.image == None:
-        request.user.image = "img/profile_image/10warhol_zGQrZpx.jpg"
+
     context = {
         "user_form": form
     }
     return render(request, "recipes/user.html", context)
 
 
+@login_required(login_url="login")
 def favorites(request):
     """ Favorite view """
 
@@ -112,6 +115,7 @@ def favorites(request):
     return render(request, "recipes/index.html", context)
 
 
+@login_required(login_url="login")
 def follow(request):
     """
     API:
@@ -145,6 +149,7 @@ def follow(request):
                             safe=False)
 
 
+@login_required(login_url="login")
 def comment(request):
     """ API: add comment(POST) and get all comments (GET) """
 
@@ -166,6 +171,7 @@ def comment(request):
                         safe=False)
 
 
+@login_required(login_url="login")
 def edit_comment(request, id):
     """ API: get a comment(GET), edit(PUT) and delete a comment(DELETE) """
 
@@ -189,6 +195,7 @@ def edit_comment(request, id):
     return JsonResponse(comment.serialize(), safe=False)
 
 
+@login_required(login_url="login")
 def shopping_list(request):
     """ API:
     add ingredients(POST),
@@ -231,6 +238,30 @@ def shopping_list(request):
     }
 
     return render(request, "recipes/shopping_list.html", context)
+
+
+@login_required(login_url="login")
+def shopping_list_recipe(request, id):
+    """
+    API:
+    Find recipe in shopping list (GET),
+    delete recipe from shopping list (DELETE)
+    """
+
+    # Get recipe in shopping list
+    recipe = ShoppingList.objects.filter(user=request.user,
+                                         recipe=id).first()
+
+    if request.method == 'DELETE':
+        recipe.delete()
+
+        return JsonResponse({"message": "Deleted from shopping list"})
+
+    try:
+        data = recipe.serialize()
+    except AttributeError:
+        data = False
+    return JsonResponse(data)
 
 
 def register(request):

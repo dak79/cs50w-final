@@ -1,9 +1,8 @@
-/* INDEX
-
+/*
+    INDEX
 1. Main
 2. Button delete
 3. CSFR Token
-
 */
 
 // 1. Main
@@ -47,6 +46,14 @@ function delete_recipe(id) {
         // Remove element from DOM
         const div = document.querySelector(`#shopping-list-structure-${id}`);
         div.remove();
+
+        // If last recipe remove title
+        const cards = document.querySelectorAll('.shopping-list-structure');
+        if (cards.length === 0) {
+
+            const title = document.querySelector('#title-container');
+            title.remove()
+        }
     })
     .catch(error => console.log('Error: ', error))
 }

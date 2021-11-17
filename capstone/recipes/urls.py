@@ -23,5 +23,7 @@ urlpatterns = [
     path("api/v1/recipe/edit_comment/<int:id>",
          views.edit_comment, name="edit_comment"),
     path("api/v1/recipe/shopping_list",
-         views.shopping_list, name="shopping_list")
+         views.shopping_list, name="shopping_list"),
+    path("api/v1/recipe/shopping_list_recipe/<int:id>",
+         views.shopping_list_recipe, name="shopping_list_recipe")
 ]

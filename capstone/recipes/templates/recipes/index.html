@@ -6,16 +6,16 @@
 {% endblock %}
 
 {% block head %}
+
     <!-- JavaScript -->
     <script src="{% static 'js/index.js' %}"></script>
     {{ request.user.id | json_script:"user_id"}}
     {{ request.user.username | json_script:"username"}}
 
-
-
 {% endblock %}
 
 {% block body %}
+
     {% if page_obj %}
         <div class="card-structure" id="title-container">
             <h1 class="card-title">{{ title }}</h1>

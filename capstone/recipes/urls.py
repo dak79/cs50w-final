@@ -22,12 +22,8 @@ urlpatterns = [
     path("api/v1/recipe/comment", views.comment, name="comment"),
     path("api/v1/recipe/edit_comment/<int:id>",
          views.edit_comment, name="edit_comment"),
-
-    # API and View
     path("api/v1/recipe/shopping_list",
          views.shopping_list, name="shopping_list"),
-
-    # API
     path("api/v1/recipe/shopping_list_recipe/<int:id>",
          views.shopping_list_recipe, name="shopping_list_recipe")
 ]

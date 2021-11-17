@@ -326,7 +326,12 @@ def comment(request):
 
 @login_required(login_url="login")
 def edit_comment(request, id):
-    """ API: get a comment(GET), edit(PUT) and delete a comment(DELETE) """
+    """
+    API:
+    get a comment(GET),
+    edit a comment (PUT),
+    delete a comment(DELETE)
+    """
 
     # Get the comment
     comment = CommentRecipe.objects.get(pk=id)
@@ -353,9 +358,9 @@ def shopping_list(request):
     """
     Shopping List views
     API:
-    add ingredients(POST),
-    get ingerdients(GET),
-    delete ingredients(DELETE)
+    add recipe ingredients(POST),
+    get all recipe ingerdients(GET),
+    delete recipe ingredients(DELETE)
     """
 
     # Add recipe to shopping list

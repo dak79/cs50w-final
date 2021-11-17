@@ -421,4 +421,4 @@ def shopping_list_recipe(request, id):
         data = recipe.serialize()
     except AttributeError:
         data = False
-    return JsonResponse(data)
+    return JsonResponse(data, safe=False)

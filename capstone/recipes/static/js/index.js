@@ -145,8 +145,7 @@ function btn_unfollow(id){
     .then(data => {
 
         // Remove recipe from page
-        const card = document.querySelector(`#card-${id}`);
-        card.remove();
+        window.location.reload();
 
         // If last recipe remove title and pagination
         const cards = document.querySelectorAll('.card-structure');

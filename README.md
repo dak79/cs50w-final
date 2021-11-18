@@ -67,7 +67,7 @@ python3 manage.py runserver
 ```
 /final/capstone
 ```
-- __init__.py: capstone project init file.
+- \__init__.py: capstone project init file.
 - asgi.py: ASGI configuration for capstone project.
 - settings.py: Django settings for capstone project.
 - urls.py: capstone project urls configuration.
@@ -76,7 +76,7 @@ python3 manage.py runserver
 ```
 /final/capstone/recipes
 ```
-- __init__.py: recipes app init file.
+- \__init__.py: recipes app init file.
 - admin.py: admin dashboard for recipes app.
 - apps.py: recipes app app configuration file.
 - forms.py: forms models for recipes app.

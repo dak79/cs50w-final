@@ -140,7 +140,7 @@ In here they will be stored all files for user profile image.
 
 |                   Endpoint                     | HTTP Method | CRUD Method |                     Result                    |
 |------------------------------------------------|:-----------:|:-----------:|-----------------------------------------------|
-| api/v1/recipe/ingredients/<int:id>/            | GET         | READ        | Get all ingredients for a given recipes       |
+| api/v1/recipe/ingredients/\<int:id\>/            | GET         | READ        | Get all ingredients for a given recipes       |
 | api/v1/recipe/preparation/<int:id>/            | GET         | READ        | Get all preparation steps for a given recipes |
 | api/v1/recipe/follow                           | POST        | ADD         | Add recipes to favorites                      |
 | api/v1/recipe/follow                           | DELETE      | DELETE      | Delete recipes from favorites                 |

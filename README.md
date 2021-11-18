@@ -37,3 +37,25 @@ Feature:
 - HTML
 - CSS
 - JavaScript
+
+## Installation
+If in your computer git is not already installed, please install git.
+
+```bash
+git clone https://github.com/dak79/cs50w-final.git
+
+cd final
+
+pip3 install pipenv
+pipenv shell
+
+pip3 install -r requirements.txt
+
+cd capstone
+python3 manage.py runserver
+```
+
+## Files
+```
+/final
+```

@@ -140,18 +140,18 @@ In here they will be stored all files for user profile image.
 
 |                   Endpoint                     | HTTP Method | CRUD Method |                     Result                    |
 |------------------------------------------------|:-----------:|:-----------:|-----------------------------------------------|
-| api/v1/recipe/ingredients/\<int:id\>/            | GET         | READ        | Get all ingredients for a given recipes       |
-| api/v1/recipe/preparation/<int:id>/            | GET         | READ        | Get all preparation steps for a given recipes |
+| api/v1/recipe/ingredients/\<int:id\>           | GET         | READ        | Get all ingredients for a given recipes       |
+| api/v1/recipe/preparation/\<int:id\>           | GET         | READ        | Get all preparation steps for a given recipes |
 | api/v1/recipe/follow                           | POST        | ADD         | Add recipes to favorites                      |
 | api/v1/recipe/follow                           | DELETE      | DELETE      | Delete recipes from favorites                 |
 | api/v1/recipe/follow                           | GET         | READ        | Get all favorites recipes                     |
 | api/v1/recipe/comment                          | POST        | ADD         | Add a comment                                 |
 | api/v1/recipe/comment                          | GET         | READ        | Get all comments                              |
-| api/v1/recipe/edit_comment/<int:id>            | GET         | READ        | Get a comment                                 |
-| api/v1/recipe/edit_comment/<int:id>            | PUT         | UPDATE      | Update a comment                              |
-| api/v1/recipe/edit_comment/<int:id>            | DELETE      | DELETE      | Delete a comment                              |
+| api/v1/recipe/edit_comment/\<int:id\>          | GET         | READ        | Get a comment                                 |
+| api/v1/recipe/edit_comment/\<int:id\>          | PUT         | UPDATE      | Update a comment                              |
+| api/v1/recipe/edit_comment/\<int:id\>          | DELETE      | DELETE      | Delete a comment                              |
 | api/v1/recipe/shopping_list                    | POST        | ADD         | Add recipe ingredients to shopping list       |
 | api/v1/recipe/shopping_list                    | GET         | READ        | Get all recipes ingredients in shopping list  |
 | api/v1/recipe/shopping_list                    | DELETE      | DELETE      | Delete recipe ingredients from shopping list  |
-| api/v1/recipe/shopping_list/<int:id>           | GET         | READ        | Get a recipe ingredients from shopping list   |
-| api/v1/recipe/shopping_list/<int:id>           | DELETE      | DELETE      | Delete recipe ingredients from shopping list  |
+| api/v1/recipe/shopping_list/<\int:id\>         | GET         | READ        | Get a recipe ingredients from shopping list   |
+| api/v1/recipe/shopping_list/<\int:id\>         | DELETE      | DELETE      | Delete recipe ingredients from shopping list  |

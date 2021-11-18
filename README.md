@@ -76,7 +76,7 @@ python3 manage.py runserver
 ```
 /final/capstone/recipes
 ```
-- \__init__.py: recipes app init file.
+- \_\_init\_\_.py: recipes app init file.
 - admin.py: admin dashboard for recipes app.
 - apps.py: recipes app app configuration file.
 - forms.py: forms models for recipes app.
@@ -137,3 +137,7 @@ In here they will be stored all files for user profile image.
 - reset_mail.txt: mail text for resetting password via link.
 
 ## API
+
+|                   Endpoint                     | HTTP Method | CRUD Method |                  Result                 |
+|------------------------------------------------|:-----------:|:-----------:|-----------------------------------------|
+| api/v1/recipe/ingredients/<int:id>/            | GET         | READ        | Get all ingredients for a given recipes |

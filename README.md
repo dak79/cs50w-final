@@ -67,7 +67,7 @@ python3 manage.py runserver
 ```
 /final/capstone
 ```
-- \__init__.py: capstone project init file.
+- \_\_init\_\_.py: capstone project init file.
 - asgi.py: ASGI configuration for capstone project.
 - settings.py: Django settings for capstone project.
 - urls.py: capstone project urls configuration.

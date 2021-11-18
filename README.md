@@ -59,3 +59,10 @@ python3 manage.py runserver
 ```
 /final
 ```
+- pipfile & pipfile.lock: file created from pipenv
+- README.md: documentation
+- requirements.txt: Python dependencies
+- .gitignore: file and folder not synchronized in git
+```
+/final/capstone
+```
